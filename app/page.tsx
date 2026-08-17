@@ -2,7 +2,7 @@
 
 import { FormEvent, MouseEvent, useEffect, useRef, useState } from "react";
 
-type Screen = "start" | "menu" | "about" | "skills" | "gallery" | "project" | "web" | "contact";
+type Screen = "start" | "menu" | "about" | "skills" | "gallery" | "project" | "web" | "video" | "contact";
 type Gallery = "Redes sociales" | "Branding e identidad visual" | "Banners web" | "Inteligencia artificial";
 
 const menu: Array<{ label: string; screen?: Screen; gallery?: Gallery }> = [
@@ -10,6 +10,7 @@ const menu: Array<{ label: string; screen?: Screen; gallery?: Gallery }> = [
   { label: "Redes sociales", screen: "gallery", gallery: "Redes sociales" },
   { label: "Branding e identidad visual", screen: "gallery", gallery: "Branding e identidad visual" },
   { label: "Banners web", screen: "gallery", gallery: "Banners web" },
+  { label: "Edición de video", screen: "video" },
   { label: "Diseño web", screen: "web" },
   { label: "Inteligencia artificial", screen: "gallery", gallery: "Inteligencia artificial" },
 ];
@@ -18,7 +19,7 @@ const galleryAssets: Record<Gallery, string[]> = {
   "Redes sociales": ["/projects/electronics-mexico/redes-01.png", "/projects/chili-beans-mexico/redes-01.png", "/projects/mark-sports/redes-01.png"],
   "Branding e identidad visual": ["/projects/general-water-company/branding-01.png"],
   "Banners web": ["/projects/banners-web/seleccion-banners.png"],
-  "Inteligencia artificial": ["/projects/inteligencia-artificial/seleccion-ia.png", "/figma/banners-tech.png"],
+  "Inteligencia artificial": ["/projects/inteligencia-artificial/seleccion-ia.png"],
 };
 
 const galleryCharacters: Record<Gallery, {src:string; className:string; alt:string}> = {
@@ -271,6 +272,77 @@ export default function Home() {
           </button>)}
         </div>
       </section>}
+      {screen === "video" && (
+  <section className="scene video-scene">
+    <img
+      className="scene-bg video-bg"
+      src="/backgrounds/city.webp"
+      alt="Ciudad recuperada por la naturaleza"
+    />
+
+    <div className="video-shade" />
+    <img
+  className="scene-character character-video"
+  src="/characters/pablo-action.png"
+  alt="Pablo como explorador en pose de acción"
+/>
+
+    <Back onClick={() => go("menu")} />
+
+    <div className="video-header">
+      <span className="screen-label">
+        ARCHIVO / PRODUCCIÓN AUDIOVISUAL
+      </span>
+
+      <h1>EDICIÓN DE VIDEO</h1>
+
+      <p>
+        REELS, CONTENIDO AUDIOVISUAL Y VIDEOS INSTITUCIONALES.
+      </p>
+    </div>
+
+    <div className="video-access">
+      <button
+        className={`video-project ${!access ? "is-locked" : "is-ready"}`}
+        onClick={() =>
+          !access
+            ? setAccessOpen(true)
+            : window.open(
+                "https://drive.google.com/drive/folders/1w3rxTDIOF-Yw63aZfFSN8ZhXt0Yy8NC8",
+                "_blank",
+                "noopener,noreferrer"
+              )
+        }
+      >
+
+      <img
+  className="video-project-preview"
+  src="/projects/edicion-video.png"
+  alt="Vista previa de los trabajos de edición de video"
+/>
+        <span className="video-project-number">01</span>
+
+        <div>
+          <small>ARCHIVO AUDIOVISUAL</small>
+
+          <h2>
+            {access ? "SELECCIÓN DE VIDEOS" : "CONTENIDO PROTEGIDO"}
+          </h2>
+
+          <p>
+            {access
+              ? "ABRIR CARPETA DE GOOGLE DRIVE"
+              : "SE REQUIERE ACCESO NIVEL 2"}
+          </p>
+        </div>
+
+        <b>
+          {access ? "VER VIDEOS ↗" : "NIVEL 2 · INGRESAR CÓDIGO"}
+        </b>
+      </button>
+    </div>
+  </section>
+)}
 
       {screen === "gallery" && <section className="scene gallery-scene">
         <img className="scene-bg gallery-bg" src="/backgrounds/city.webp" alt="Ciudad abandonada recuperada por la naturaleza" /><img className={`scene-character character-gallery ${galleryCharacter.className}`} src={galleryCharacter.src} alt={galleryCharacter.alt} /><div className="gallery-shade" />
