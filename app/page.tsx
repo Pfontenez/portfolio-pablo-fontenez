@@ -82,9 +82,16 @@ const aiProjects = [
     images: ["/projects/inteligencia-artificial/seleccion-ia.png"],
   },
 ];
-
+const menuBackgrounds = [
+  "/backgrounds/church.webp",
+  "/backgrounds/city.webp",
+  "/backgrounds/horse-statue.webp",
+  "/backgrounds/pergola.webp",
+  "/backgrounds/stadium.webp",
+];
 export default function Home() {
   const [screen, setScreen] = useState<Screen>("start");
+  const [menuBackgroundIndex, setMenuBackgroundIndex] = useState(0);
   const [gallery, setGallery] = useState<Gallery>("Redes sociales");
   const [transitioning, setTransitioning] = useState(false);
   const [access, setAccess] = useState(false);
@@ -115,11 +122,22 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if (screen === previousScreen.current) return;
-    previousScreen.current = screen;
-    if (!soundEnabled) return;
-    playSound(screen === "menu" ? "menu" : "secciones");
-  }, [screen, soundEnabled]);
+  if (screen === previousScreen.current) return;
+
+  const lastScreen = previousScreen.current;
+
+  if (screen === "menu" && lastScreen !== "start") {
+    setMenuBackgroundIndex(
+      currentIndex => (currentIndex + 1) % menuBackgrounds.length
+    );
+  }
+
+  previousScreen.current = screen;
+
+  if (!soundEnabled) return;
+
+  playSound(screen === "menu" ? "menu" : "secciones");
+}, [screen, soundEnabled]);
 
   useEffect(() => {
     const key = (e: KeyboardEvent) => {
@@ -209,7 +227,12 @@ export default function Home() {
       </section>}
 
       {screen === "menu" && <section className="scene menu-scene">
-        <img className="scene-bg menu-bg" src="/backgrounds/church.webp" alt="Iglesia abandonada recuperada por la naturaleza" />
+        <img
+  key={menuBackgroundIndex}
+  className="scene-bg menu-bg"
+  src={menuBackgrounds[menuBackgroundIndex]}
+  alt="Escenario postapocalíptico recuperado por la naturaleza"
+/>
         <img className="scene-character character-menu" src="/characters/pablo-archer.webp" alt="Pablo como explorador con arco" />
         <div className="menu-vignette" />
         <div className="menu-panel">
