@@ -1040,3 +1040,14 @@
     top: 118px !important;
   }
 }
+
+/* AJUSTE DE LUMINOSIDAD — CONTACTO */
+
+.contact-bg {
+  filter: brightness(1.28) saturate(1.05);
+}
+
+.contact-shade {
+  background: rgba(6, 11, 16, 0.42);
+  backdrop-filter: blur(1px);
+}

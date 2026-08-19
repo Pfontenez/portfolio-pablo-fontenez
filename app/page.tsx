@@ -405,11 +405,50 @@ export default function Home() {
         </div>}
       </section>}
 
-      {screen === "contact" && <section className="scene contact-scene">
-        <img className="scene-bg contact-bg" src="/backgrounds/window.webp" alt="Ventana de un edificio abandonado recuperado por la naturaleza" /><div className="contact-shade" /><Back onClick={() => go("menu")} />
-        <img className="thanks-logo" src="/brand/logo-pablo-horizontal.png" alt="Pablo Fonteñez — Diseñador gráfico" />
-        <div className="contact-box"><span className="screen-label">FIN DE LA MISIÓN</span><h1>MUCHAS GRACIAS</h1><a href="mailto:pabloezequielfontenez@gmail.com"><small>CORREO</small>pabloezequielfontenez@gmail.com</a><a href="https://www.linkedin.com/in/pfontenez/" target="_blank"><small>LINKEDIN</small>linkedin.com/in/pfontenez/</a><a href="tel:+541134145166"><small>CELULAR</small>11 3414-5166</a></div>
-      </section>}
+      {screen === "contact" && (
+  <section className="scene contact-scene">
+    <img
+      className="scene-bg contact-bg"
+      src="/backgrounds/contact-workspace.png"
+      alt="Mesa de trabajo de diseño gráfico abandonada y recuperada por la naturaleza"
+    />
+
+    <div className="contact-shade" />
+
+    <Back onClick={() => go("menu")} />
+
+    <img
+      className="thanks-logo"
+      src="/brand/logo-pablo-horizontal.png"
+      alt="Pablo Fonteñez — Diseñador gráfico"
+    />
+
+    <div className="contact-box">
+      <span className="screen-label">FIN DE LA MISIÓN</span>
+
+      <h1>MUCHAS GRACIAS</h1>
+
+      <a href="mailto:pabloezequielfontenez@gmail.com">
+        <small>CORREO</small>
+        pabloezequielfontenez@gmail.com
+      </a>
+
+      <a
+        href="https://www.linkedin.com/in/pfontenez/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <small>LINKEDIN</small>
+        linkedin.com/in/pfontenez/
+      </a>
+
+      <a href="tel:+541134145166">
+        <small>CELULAR</small>
+        11 3414-5166
+      </a>
+    </div>
+  </section>
+)}
 
       {accessOpen && <div className="access-overlay" onMouseDown={() => setAccessOpen(false)}><div className="access-dialog" onMouseDown={e=>e.stopPropagation()}><button className="x" onClick={() => setAccessOpen(false)}>×</button><span className="screen-label">ACCESS RESTRICTED</span><h2>SE REQUIERE<br/>ACCESO NIVEL 2</h2><p>Ingresá la clave compartida para desbloquear los proyectos de clientes.</p><form ref={accessForm} onSubmit={unlock}><input name="key" autoFocus placeholder="CLAVE DE ACCESO"/><button type="submit">DESBLOQUEAR</button></form>{accessError && <small>Clave incorrecta. Para la demo usá “nivel2”.</small>}<i>SECURITY CLEARANCE · LEVEL 02</i></div></div>}
     </main>
