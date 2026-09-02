@@ -4,6 +4,23 @@ import { FormEvent, MouseEvent, useEffect, useRef, useState } from "react";
 
 type Screen = "start" | "menu" | "about" | "skills" | "gallery" | "project" | "web" | "video" | "contact";
 type Gallery = "Redes sociales" | "Branding e identidad visual" | "Banners web" | "Inteligencia artificial";
+type SkillSection =
+  | "activities"
+  | "abilities"
+  | "education"
+  | "experience"
+  | "software";
+
+  const skillSections: Array<{
+  id: SkillSection;
+  label: string;
+}> = [
+  { id: "activities", label: "ACTIVIDADES FRECUENTES" },
+  { id: "abilities", label: "HABILIDADES" },
+  { id: "education", label: "EDUCACIÓN" },
+  { id: "experience", label: "EXPERIENCIA" },
+  { id: "software", label: "SOFTWARE SKILLS" },
+];
 
 const menu: Array<{ label: string; screen?: Screen; gallery?: Gallery }> = [
   { label: "Quién soy", screen: "about" },
@@ -89,8 +106,153 @@ const menuBackgrounds = [
   "/backgrounds/pergola.webp",
   "/backgrounds/stadium.webp",
 ];
+
+function SoftwareIcon({
+  software,
+}: {
+  software: string;
+}) {
+  if (software === "figma") {
+    return (
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="12" cy="7" r="5" />
+        <circle cx="20" cy="7" r="5" />
+        <circle cx="12" cy="16" r="5" />
+        <circle cx="20" cy="16" r="5" />
+        <circle cx="12" cy="25" r="5" />
+      </svg>
+    );
+  }
+
+  const initials: Record<string, string> = {
+    photoshop: "Ps",
+    illustrator: "Ai",
+    premiere: "Pr",
+    aftereffects: "Ae",
+  };
+
+  return (
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <rect x="2" y="2" width="28" height="28" rx="5" />
+
+      <text
+        x="16"
+        y="20"
+        textAnchor="middle"
+      >
+        {initials[software]}
+      </text>
+    </svg>
+  );
+}
+
 export default function Home() {
+  function getSkillSegmentPath(index: number) {
+  const center = 200;
+  const outerRadius = 174;
+  const innerRadius = 78;
+  const step = 72;
+  const separation = 2.5;
+
+  const startAngle =
+    -90 - step / 2 + index * step + separation;
+
+  const endAngle =
+    -90 - step / 2 + (index + 1) * step - separation;
+
+  const point = (radius: number, angle: number) => {
+    const radians = (angle * Math.PI) / 180;
+
+    return {
+      x: center + radius * Math.cos(radians),
+      y: center + radius * Math.sin(radians),
+    };
+  };
+
+  const outerStart = point(outerRadius, startAngle);
+  const outerEnd = point(outerRadius, endAngle);
+  const innerEnd = point(innerRadius, endAngle);
+  const innerStart = point(innerRadius, startAngle);
+
+  return `
+    M ${outerStart.x} ${outerStart.y}
+    A ${outerRadius} ${outerRadius} 0 0 1
+      ${outerEnd.x} ${outerEnd.y}
+    L ${innerEnd.x} ${innerEnd.y}
+    A ${innerRadius} ${innerRadius} 0 0 0
+      ${innerStart.x} ${innerStart.y}
+    Z
+  `;
+}
+
+function getSkillIconPosition(index: number) {
+  const angle = (-90 + index * 72) * (Math.PI / 180);
+  const radius = 125;
+
+  return {
+    x: 200 + radius * Math.cos(angle),
+    y: 200 + radius * Math.sin(angle),
+  };
+}
+
+function SkillCategoryIcon({
+  type,
+}: {
+  type: SkillSection;
+}) {
+  if (type === "activities") {
+    return (
+      <g>
+        <rect x="4" y="4" width="16" height="16" rx="2" />
+        <path d="M8 9l2 2 4-4" />
+        <path d="M8 15h8" />
+      </g>
+    );
+  }
+
+  if (type === "abilities") {
+    return (
+      <g>
+        <path d="M12 3l2.2 5.2L20 10l-4.4 3.6L17 19l-5-3-5 3 1.4-5.4L4 10l5.8-1.8z" />
+      </g>
+    );
+  }
+
+  if (type === "education") {
+    return (
+      <g>
+        <path d="M3 9l9-5 9 5-9 5z" />
+        <path d="M7 12v4c3 2 7 2 10 0v-4" />
+        <path d="M21 9v6" />
+      </g>
+    );
+  }
+
+  if (type === "experience") {
+    return (
+      <g>
+        <rect x="3" y="7" width="18" height="13" rx="2" />
+        <path d="M8 7V4h8v3" />
+        <path d="M3 12h18" />
+        <path d="M10 12v2h4v-2" />
+      </g>
+    );
+  }
+
+  return (
+    <g>
+      <rect x="3" y="3" width="7" height="7" rx="1" />
+      <rect x="14" y="3" width="7" height="7" rx="1" />
+      <rect x="3" y="14" width="7" height="7" rx="1" />
+      <rect x="14" y="14" width="7" height="7" rx="1" />
+    </g>
+  );
+}
   const [screen, setScreen] = useState<Screen>("start");
+  const [activeSkillSection, setActiveSkillSection] =
+  useState<SkillSection | null>(null);
+  const [hoveredSkillSection, setHoveredSkillSection] =
+  useState<SkillSection | null>(null);
   const [menuBackgroundIndex, setMenuBackgroundIndex] = useState(0);
   const [gallery, setGallery] = useState<Gallery>("Redes sociales");
   const [transitioning, setTransitioning] = useState(false);
@@ -191,9 +353,12 @@ export default function Home() {
   }
 
   function handleInterfaceClick(e: MouseEvent<HTMLElement>) {
-    const target = e.target as HTMLElement;
-    if (target.closest("button, a")) playSound("click");
+  const target = e.target as HTMLElement;
+
+  if (target.closest('button, a, [role="button"]')) {
+    playSound("click");
   }
+}
 
   function openGallery(next: Gallery) { setGallery(next); go("gallery"); }
   function openProject(index: number) { setSelectedProject(index); setProjectSlide(0); go("project"); }
@@ -257,30 +422,323 @@ export default function Home() {
         <div className="contact-chips"><a href="mailto:pabloezequielfontenez@gmail.com">pabloezequielfontenez@gmail.com</a><a href="https://www.linkedin.com/in/pfontenez/" target="_blank">linkedin.com/in/pfontenez/</a><a href="https://wa.me/541134145166?text=Hola%20Pablo%2C%20vi%20tu%20portfolio%20y%20quer%C3%ADa%20contactarte." target="_blank">WhatsApp · 11 3414-5166</a></div>
       </section>}
 
-      {screen === "skills" && <section className="scene skills-scene">
-        <img className="scene-bg skills-bg" src="/backgrounds/stadium.webp" alt="Estadio abandonado recuperado por la naturaleza" /><img className="scene-character character-skills" src="/characters/pablo-front.png" alt="Pablo como explorador de frente" /><div className="skills-shade" />
-        <Back onClick={() => go("about")} label="VOLVER AL PERFIL" />
-        <div className="skills-content"><span className="screen-label">INVENTARIO / HABILIDADES</span><h1>SKILLS Y MÁS</h1>
-          <div className="resume-grid">
-            <article className="resume-card education-card"><h2>EDUCACIÓN</h2>
-              <div className="education-item"><b>AFTER EFFECTS Y PREMIERE</b><span>En curso.</span></div>
-              <div className="education-item"><b>DISEÑO UX/UI</b><span>Research, diseño y prototipado basado en MVP. Metodologías ágiles, Optimal Workshop, Useberry y Figma.</span></div>
-              <div className="education-item"><b>DISEÑO UX/UI AVANZADO</b><span>Análisis de tendencias, Lean UX Canvas, pain points, tree testing, UX Writing y Motion.</span></div>
-            </article>
-            <article className="resume-card software-card"><h2>SOFTWARE SKILLS</h2>
-              {[["Ps","PHOTOSHOP","Diseño y edición de imágenes"],["Ai","ILLUSTRATOR","Diseño vectorial y maquetación"],["Fi","FIGMA","Interfaces y prototipado"],["Pr","PREMIERE PRO","Edición y montaje de video"],["Ae","AFTER EFFECTS","Motion y animación"]].map(([icon,name,detail]) => <div className="software-row" key={name}><span className="software-icon" aria-label={`Espacio reservado para el ícono de ${name}`}>{icon}</span><span><b>{name}</b><small>{detail}</small></span></div>)}
-            </article>
-            <article className="resume-card experience-card"><h2>EXPERIENCIA</h2><div className="timeline">
-              <div><span>2025 — ACTUALIDAD</span><b>SIEMPRE ARG</b><small>DISEÑADOR GRÁFICO Y DIGITAL</small></div>
-              <div><span>Julio 2021 — Febrero 2025</span><b>KRAB-E</b><small>DISEÑADOR GRÁFICO</small></div>
-              <div><span>Febrero 2020 — Julio 2021</span><b>SEARCH</b><small>DISEÑADOR GRÁFICO</small></div>
-              <div><span>Mayo 2014 — Agosto 2017</span><b>ESTUDIO 33</b><small>DISEÑADOR GRÁFICO FREELANCE</small></div>
-            </div></article>
-            <article className="resume-card abilities-card"><h2>HABILIDADES</h2><ul><li>Atención al detalle</li><li>Organización y gestión del tiempo</li><li>Creatividad y criterio visual</li><li>Comunicación y trabajo en equipo</li><li className="ai-ability">Manejo de inteligencia artificial<small>Creación visual, prompts y optimización de contenidos.</small></li></ul></article>
-            <article className="resume-card activities-card"><h2>ACTIVIDADES FRECUENTES</h2><ul><li>Contenido para redes sociales</li><li>Edición de reels y videos institucionales</li><li>Presentaciones corporativas</li><li>Diseño y revisión de páginas web</li><li>Desarrollo visual con inteligencia artificial</li></ul></article>
+      {screen === "skills" && (
+  <section className="scene skills-scene">
+    <img
+      className="scene-bg skills-bg"
+      src="/backgrounds/stadium.webp"
+      alt="Estadio abandonado recuperado por la naturaleza"
+    />
+
+    <img
+      className="scene-character character-skills"
+      src="/characters/pablo-front.png"
+      alt="Pablo como explorador de frente"
+    />
+
+    <div className="skills-shade" />
+
+    <Back onClick={() => go("about")} label="VOLVER AL PERFIL" />
+
+    <div className="skills-interactive">
+      <header className="skills-interactive-header">
+        <span className="screen-label">
+          INVENTARIO / HABILIDADES
+        </span>
+
+        <h1>SKILLS Y MÁS</h1>
+
+        <p>
+          Explorá cada categoría para conocer mi experiencia,
+          herramientas y forma de trabajo.
+        </p>
+      </header>
+      <div className="skill-panel-column"></div>
+      <div
+        className={`skill-detail-panel ${
+          activeSkillSection ? "is-open" : ""
+        }`}
+      >
+  
+        {!activeSkillSection && (
+          <div className="skill-detail-empty">
+            <span>ARCHIVO DISPONIBLE</span>
+            <h2>SELECCIONÁ UNA CATEGORÍA</h2>
+            <p>
+              Pasá el puntero por cada porción y hacé clic para
+              desplegar su contenido.
+            </p>
           </div>
-        </div>
-      </section>}
+        )}
+
+        {activeSkillSection === "activities" && (
+          <div className="skill-detail-content">
+            <span className="skill-detail-number">01</span>
+            <h2>ACTIVIDADES FRECUENTES</h2>
+
+            <ul>
+              <li>Contenido para redes sociales</li>
+              <li>Edición de reels y videos institucionales</li>
+              <li>Presentaciones corporativas</li>
+              <li>Diseño y revisión de páginas web</li>
+              <li>Desarrollo visual con inteligencia artificial</li>
+            </ul>
+          </div>
+        )}
+
+        {activeSkillSection === "abilities" && (
+          <div className="skill-detail-content">
+            <span className="skill-detail-number">02</span>
+            <h2>HABILIDADES</h2>
+
+            <ul>
+              <li>Atención al detalle</li>
+              <li>Organización y gestión del tiempo</li>
+              <li>Creatividad y criterio visual</li>
+              <li>Comunicación y trabajo en equipo</li>
+              <li>
+                Manejo de inteligencia artificial
+                <small>
+                  Creación visual, prompts y optimización de contenidos.
+                </small>
+              </li>
+            </ul>
+          </div>
+        )}
+
+        {activeSkillSection === "education" && (
+          <div className="skill-detail-content">
+            <span className="skill-detail-number">03</span>
+            <h2>EDUCACIÓN</h2>
+
+            <div className="skill-detail-items">
+              <article>
+                <b>AFTER EFFECTS Y PREMIERE</b>
+                <span>En curso.</span>
+              </article>
+
+              <article>
+                <b>DISEÑO UX/UI</b>
+                <span>
+                  Research, diseño y prototipado basado en MVP.
+                  Metodologías ágiles, Optimal Workshop, Useberry y Figma.
+                </span>
+              </article>
+
+              <article>
+                <b>DISEÑO UX/UI AVANZADO</b>
+                <span>
+                  Análisis de tendencias, Lean UX Canvas, pain points,
+                  tree testing, UX Writing y Motion.
+                </span>
+              </article>
+            </div>
+          </div>
+        )}
+
+        {activeSkillSection === "experience" && (
+          <div className="skill-detail-content">
+            <span className="skill-detail-number">04</span>
+            <h2>EXPERIENCIA</h2>
+
+            <div className="skill-detail-timeline">
+              <article>
+                <span>2025 — ACTUALIDAD</span>
+                <b>SIEMPRE ARG</b>
+                <small>DISEÑADOR GRÁFICO Y DIGITAL</small>
+              </article>
+
+              <article>
+                <span>JULIO 2021 — FEBRERO 2025</span>
+                <b>KRAB-E</b>
+                <small>DISEÑADOR GRÁFICO</small>
+              </article>
+
+              <article>
+                <span>FEBRERO 2020 — JULIO 2021</span>
+                <b>SEARCH</b>
+                <small>DISEÑADOR GRÁFICO</small>
+              </article>
+
+              <article>
+                <span>MAYO 2014 — AGOSTO 2017</span>
+                <b>ESTUDIO 33</b>
+                <small>DISEÑADOR GRÁFICO FREELANCE</small>
+              </article>
+            </div>
+          </div>
+        )}
+
+        {activeSkillSection === "software" && (
+          <div className="skill-detail-content">
+            <span className="skill-detail-number">05</span>
+            <h2>SOFTWARE SKILLS</h2>
+
+            <div className="skill-software-list">
+              {[
+                ["photoshop", "PHOTOSHOP", "Diseño y edición de imágenes"],
+                ["illustrator", "ILLUSTRATOR", "Diseño vectorial y maquetación"],
+                ["figma", "FIGMA", "Interfaces y prototipado"],
+                ["premiere", "PREMIERE PRO", "Edición y montaje de video"],
+                ["aftereffects", "AFTER EFFECTS", "Motion y animación"],
+              ].map(([software, name, detail]) => (
+                <div className="skill-software-item" key={name}>
+                  <span className="skill-software-icon">
+                    <SoftwareIcon software={software} />
+                  </span>
+
+                  <div>
+                    <b>{name}</b>
+                    <small>{detail}</small>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      
+
+    {activeSkillSection && (
+  <div className="skill-panel-hud">
+    <div className="skill-panel-status">
+      <span>
+        <i />
+        PLAYER ONLINE
+      </span>
+
+      <b>
+        ARCHIVO{" "}
+        {String(
+          skillSections.findIndex(
+            item => item.id === activeSkillSection
+          ) + 1
+        ).padStart(2, "0")}{" "}
+        / 05
+      </b>
+    </div>
+
+    <div className="skill-panel-energy-label">
+      <span>ENERGÍA CREATIVA</span>
+      <b>NIVEL 15+</b>
+    </div>
+
+    <div className="skill-panel-energy">
+      {Array.from({ length: 12 }).map((_, index) => (
+        <i key={index} />
+      ))}
+    </div>
+  </div>
+  )}
+</div>
+
+      <div className="skill-wheel-area">
+        <div className="skill-wheel">
+  <svg
+    className="skill-wheel-svg"
+    viewBox="0 0 400 400"
+    aria-label="Categorías de habilidades"
+  >
+    {skillSections.map((item, index) => {
+      const iconPosition = getSkillIconPosition(index);
+
+      return (
+        <g
+          key={item.id}
+          role="button"
+          tabIndex={0}
+          className={`skill-wheel-slice ${
+            activeSkillSection === item.id ? "is-active" : ""
+          }`}
+          aria-label={`Abrir ${item.label}`}
+          aria-expanded={activeSkillSection === item.id}
+          onMouseEnter={() => setHoveredSkillSection(item.id)}
+          onMouseLeave={() => setHoveredSkillSection(null)}
+          onFocus={() => setHoveredSkillSection(item.id)}
+          onBlur={() => setHoveredSkillSection(null)}
+          onClick={() =>
+            setActiveSkillSection(current =>
+              current === item.id ? null : item.id
+            )
+          }
+          onKeyDown={event => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+
+              setActiveSkillSection(current =>
+                current === item.id ? null : item.id
+              );
+            }
+          }}
+        >
+          <path
+            className="skill-wheel-slice-shape"
+            d={getSkillSegmentPath(index)}
+          />
+
+          <g
+            className="skill-wheel-slice-icon"
+            transform={`translate(
+              ${iconPosition.x - 12}
+              ${iconPosition.y - 12}
+            )`}
+          >
+            <SkillCategoryIcon type={item.id} />
+          </g>
+
+          <text
+            className="skill-wheel-slice-number"
+            x={iconPosition.x}
+            y={iconPosition.y + 35}
+            textAnchor="middle"
+          >
+            {String(index + 1).padStart(2, "0")}
+          </text>
+        </g>
+      );
+    })}
+
+    <circle
+      className="skill-wheel-center"
+      cx="200"
+      cy="200"
+      r="69"
+    />
+
+    <text
+      className="skill-wheel-center-small"
+      x="200"
+      y="187"
+      textAnchor="middle"
+    >
+      {hoveredSkillSection || activeSkillSection
+        ? "CATEGORÍA"
+        : "INVENTARIO"}
+    </text>
+
+    <text
+      className="skill-wheel-center-title"
+      x="200"
+      y="211"
+      textAnchor="middle"
+    >
+      {skillSections
+        .find(
+          item =>
+            item.id ===
+            (hoveredSkillSection || activeSkillSection)
+        )
+        ?.label.split(" ")[0] || "SKILLS"}
+    </text>
+  </svg>
+</div>
+
+        <p className="skill-wheel-help">
+          PASÁ EL PUNTERO PARA EXPLORAR · HACÉ CLIC PARA DESPLEGAR
+        </p>
+      </div>
+    </div>
+  </section>
+)}
 
       {screen === "web" && <section className="scene web-scene">
         <img className="scene-bg web-bg" src="/backgrounds/horse-statue.webp" alt="Estatua ecuestre en una ciudad recuperada por la naturaleza" />
