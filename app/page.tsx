@@ -270,6 +270,23 @@ function SkillCategoryIcon({
   const galleryProjects = gallery === "Redes sociales" ? socialProjects : gallery === "Branding e identidad visual" ? brandingProjects : gallery === "Banners web" ? bannerProjects : aiProjects;
   const currentProject = galleryProjects[selectedProject] || socialProjects[0];
   const slideTotal = currentProject.images.length;
+  const accessMessage =
+  "Hola Pablo, estuve viendo tu portfolio y me gustaría solicitar la clave de acceso para conocer tus trabajos protegidos. Muchas gracias.";
+  
+  const whatsappAccessUrl =
+  `https://wa.me/5491134145166?text=${encodeURIComponent(accessMessage)}`;
+
+  const contactMessage =
+  "Hola Pablo, estuve viendo tu portfolio y me gustaría ponerme en contacto con vos.";
+
+const contactWhatsappUrl =
+  `https://wa.me/5491134145166?text=${encodeURIComponent(contactMessage)}`;
+
+
+const emailAccessUrl =
+  `mailto:pabloezequielfontenez@gmail.com?subject=${encodeURIComponent(
+    "Solicitud de acceso al portfolio"
+  )}&body=${encodeURIComponent(accessMessage)}`;
 
   useEffect(() => {
     sounds.current = {
@@ -290,7 +307,7 @@ function SkillCategoryIcon({
 
   if (screen === "menu" && lastScreen !== "start") {
     setMenuBackgroundIndex(
-      currentIndex => (currentIndex + 1) % menuBackgrounds.length
+      currentIndex => (currentIndex + 1) % (menuBackgrounds.length + 1)
     );
   }
 
@@ -392,13 +409,19 @@ function SkillCategoryIcon({
       </section>}
 
       {screen === "menu" && <section className="scene menu-scene">
-        <img
-  key={menuBackgroundIndex}
+        <video
   className="scene-bg menu-bg"
-  src={menuBackgrounds[menuBackgroundIndex]}
-  alt="Escenario postapocalíptico recuperado por la naturaleza"
-/>
-        <img className="scene-character character-menu" src="/characters/pablo-archer.webp" alt="Pablo como explorador con arco" />
+  autoPlay
+  muted
+  loop
+  playsInline
+  preload="auto"
+>
+  <source
+    src="/backgrounds/menu-idle.mp4"
+    type="video/mp4"
+  />
+</video>
         <div className="menu-vignette" />
         <div className="menu-panel">
           <button className="menu-logo-button" onClick={() => go("start")} aria-label="Volver al inicio"><img className="menu-logo" src="/brand/logo-pablo-horizontal.png" alt="Pablo Fonteñez — Diseñador gráfico" /></button>
@@ -900,15 +923,41 @@ function SkillCategoryIcon({
         linkedin.com/in/pfontenez/
       </a>
 
-      <a href="tel:+541134145166">
-        <small>CELULAR</small>
-        11 3414-5166
-      </a>
+     <a
+      href={contactWhatsappUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <small>WHATSAPP</small>
+      11 3414-5166
+    </a>
     </div>
   </section>
 )}
 
-      {accessOpen && <div className="access-overlay" onMouseDown={() => setAccessOpen(false)}><div className="access-dialog" onMouseDown={e=>e.stopPropagation()}><button className="x" onClick={() => setAccessOpen(false)}>×</button><span className="screen-label">ACCESS RESTRICTED</span><h2>SE REQUIERE<br/>ACCESO NIVEL 2</h2><p>Ingresá la clave compartida para desbloquear los proyectos de clientes.</p><form ref={accessForm} onSubmit={unlock}><input name="key" autoFocus placeholder="CLAVE DE ACCESO"/><button type="submit">DESBLOQUEAR</button></form>{accessError && <small>Clave incorrecta. Para la demo usá “nivel2”.</small>}<i>SECURITY CLEARANCE · LEVEL 02</i></div></div>}
+      {accessOpen && <div className="access-overlay" onMouseDown={() => 
+        setAccessOpen(false)}><div className="access-dialog" onMouseDown={e=>e.stopPropagation()}><button className="x" 
+        onClick={() => setAccessOpen(false)}>×</button><span className="screen-label">ACCESS RESTRICTED</span>
+        <h2>SE REQUIERE<br/>ACCESO NIVEL 2</h2><p>Ingresá la clave compartida para desbloquear los proyectos de clientes.</p>
+        <form ref={accessForm} onSubmit={unlock}><input name="key" autoFocus placeholder="CLAVE DE ACCESO"/><button type="submit">
+          DESBLOQUEAR</button></form>{accessError && <small>
+          Clave incorrecta. Verificá los datos o solicitá acceso.</small>}<div className="access-request">
+  <span>SOLICITAR CREDENCIAL</span>
+
+  <div className="access-request-actions">
+    <a
+      href={whatsappAccessUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      WHATSAPP
+    </a>
+
+    <a href={emailAccessUrl}>
+      CORREO
+    </a>
+  </div>
+</div><i>SECURITY CLEARANCE · LEVEL 02</i></div></div>}
     </main>
   );
 }
