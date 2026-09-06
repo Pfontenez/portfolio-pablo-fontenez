@@ -2299,3 +2299,620 @@ npx.cmd vite {
     grid-template-columns: 1fr;
   }
 }
+
+/* ACCIONES — QUIÉN SOY */
+
+.about-actions {
+  position: absolute;
+  right: 4%;
+  bottom: 4%;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.about-contact-link,
+.about-cv-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-width: 190px;
+  padding: 13px 16px;
+  color: #e2ddd0;
+  background: rgba(9, 12, 10, 0.78);
+  border: 1px solid rgba(226, 221, 208, 0.3);
+  font-family: inherit;
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  text-decoration: none;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition:
+    color 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.about-contact-link:hover,
+.about-cv-link:hover {
+  color: #ffffff;
+  background: rgba(111, 118, 83, 0.82);
+  border-color: rgba(226, 221, 208, 0.65);
+}
+
+.about-contact-link span,
+.about-cv-link span {
+  color: #aeb78a;
+  font-size: 16px;
+}
+
+.contact-interface {
+  position: absolute;
+  z-index: 6;
+  top: 10%;
+  right: 4%;
+  bottom: 5%;
+  left: 31%;
+  overflow-y: auto;
+  color: #e2ddd0;
+}
+
+
+/* =====================================================
+   CONTACTO — CENTRO DE OPERACIONES
+===================================================== */
+
+.contact-scene {
+  color: #e2ddd0;
+}
+
+.contact-scene .thanks-logo {
+  position: absolute;
+  z-index: 6;
+  top: 36px;
+  left: 42px;
+  width: 210px;
+  height: auto;
+  object-fit: contain;
+}
+
+.contact-interface {
+  position: absolute;
+  z-index: 6;
+  top: 9%;
+  right: 4%;
+  bottom: 4%;
+  left: 31%;
+
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 18px;
+
+  overflow: visible;
+  color: #e2ddd0;
+}
+
+.contact-mission-header {
+  max-width: 800px;
+}
+
+.contact-mission-header .screen-label {
+  display: block;
+  margin-bottom: 7px;
+  color: #9da67a;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+}
+
+.contact-mission-header h1 {
+  margin: 0;
+  color: #e2ddd0;
+  font-size: clamp(40px, 4vw, 68px);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -1px;
+}
+
+.contact-mission-header p {
+  margin: 12px 0 0;
+  color: rgba(226, 221, 208, 0.65);
+  font-size: 13px;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.contact-dashboard {
+  display: grid;
+  grid-template-columns: minmax(230px, 0.65fr) minmax(600px, 2fr);
+  gap: 18px;
+  min-height: 0;
+}
+
+/* PANEL DEL PROFESIONAL */
+
+.contact-player-panel {
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(26, 31, 26, 0.9),
+      rgba(7, 11, 9, 0.86)
+    );
+  border: 1px solid rgba(111, 118, 83, 0.58);
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3);
+}
+
+.contact-player-panel::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 75px;
+  height: 75px;
+  border-top: 1px solid rgba(157, 166, 122, 0.35);
+  border-right: 1px solid rgba(157, 166, 122, 0.35);
+  content: "";
+}
+
+.contact-panel-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  color: rgba(226, 221, 208, 0.58);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.contact-panel-heading span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.contact-panel-heading b {
+  color: #aeb78a;
+  font-size: 8px;
+  letter-spacing: 1.5px;
+}
+
+.contact-status-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: #99a475;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(153, 164, 117, 0.9);
+  animation: contactStatusPulse 1.8s ease-in-out infinite;
+}
+
+.contact-player-panel h2 {
+  margin: 0 0 18px;
+  color: #e2ddd0;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+}
+
+.contact-player-data {
+  margin: 0;
+}
+
+.contact-player-data div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(226, 221, 208, 0.1);
+}
+
+.contact-player-data dt {
+  color: rgba(226, 221, 208, 0.44);
+  font-size: 8px;
+  letter-spacing: 1.2px;
+}
+
+.contact-player-data dd {
+  margin: 0;
+  color: #e2ddd0;
+  font-size: 9px;
+  font-weight: 700;
+  text-align: right;
+  letter-spacing: 0.5px;
+}
+
+.contact-coverage {
+  margin-top: 18px;
+}
+
+.contact-coverage > span {
+  display: block;
+  margin-bottom: 9px;
+  color: #9da67a;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.contact-coverage div {
+  margin-top: 7px;
+  padding: 9px 10px;
+  background: rgba(111, 118, 83, 0.11);
+  border-left: 2px solid #6f7653;
+}
+
+.contact-coverage small,
+.contact-coverage b {
+  display: block;
+}
+
+.contact-coverage small {
+  margin-bottom: 4px;
+  color: rgba(226, 221, 208, 0.45);
+  font-size: 7px;
+  letter-spacing: 1.2px;
+}
+
+.contact-coverage b {
+  color: #d7d3c7;
+  font-size: 8px;
+  line-height: 1.4;
+  letter-spacing: 0.5px;
+}
+
+/* TARJETAS DE MISIÓN */
+
+.contact-missions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  min-width: 0;
+}
+
+.contact-mission-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  padding: 20px;
+  background: rgba(7, 11, 9, 0.82);
+  border: 1px solid rgba(226, 221, 208, 0.22);
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.28);
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    background 0.3s ease;
+}
+
+.contact-mission-card:hover {
+  background: rgba(13, 18, 14, 0.92);
+  border-color: rgba(157, 166, 122, 0.75);
+  transform: translateY(-4px);
+}
+
+.contact-mission-card::after {
+  position: absolute;
+  top: -15px;
+  right: 10px;
+  color: rgba(226, 221, 208, 0.035);
+  font-size: 105px;
+  font-weight: 700;
+  line-height: 1;
+  content: "MISSION";
+  pointer-events: none;
+}
+
+.contact-mission-number {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.contact-mission-number span {
+  color: #aeb78a;
+  font-size: 28px;
+  font-weight: 300;
+}
+
+.contact-mission-number small {
+  color: rgba(226, 221, 208, 0.42);
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+}
+
+.contact-mission-card h2 {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 12px;
+  color: #e2ddd0;
+  font-size: clamp(18px, 1.5vw, 25px);
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+.contact-mission-card > p {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 15px;
+  color: rgba(226, 221, 208, 0.6);
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.contact-mission-tags,
+.contact-project-types,
+.contact-specialties {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.contact-mission-tags span,
+.contact-project-types span {
+  padding: 6px 8px;
+  color: #b7bea0;
+  background: rgba(111, 118, 83, 0.14);
+  border: 1px solid rgba(157, 166, 122, 0.25);
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+}
+
+.contact-project-types {
+  margin-bottom: 10px;
+}
+
+.contact-specialties span {
+  padding: 5px 7px;
+  color: rgba(226, 221, 208, 0.55);
+  border: 1px solid rgba(226, 221, 208, 0.13);
+  font-size: 7px;
+  letter-spacing: 0.5px;
+}
+
+.contact-budget-note {
+  position: relative;
+  z-index: 1;
+  display: block;
+  margin: 12px 0;
+  color: rgba(226, 221, 208, 0.4);
+  font-size: 7px;
+  letter-spacing: 1px;
+}
+
+.contact-mission-card > a {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding: 11px 12px;
+  color: #e2ddd0;
+  background: rgba(111, 118, 83, 0.22);
+  border: 1px solid rgba(157, 166, 122, 0.45);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-decoration: none;
+  transition:
+    color 0.25s ease,
+    background 0.25s ease;
+}
+
+.contact-mission-card > a:hover {
+  color: #ffffff;
+  background: #6f7653;
+}
+
+/* BANDA INFERIOR */
+
+.contact-comms {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 48px;
+  padding: 9px 14px;
+  background: rgba(7, 11, 9, 0.88);
+  border: 1px solid rgba(111, 118, 83, 0.5);
+  border-radius: 7px;
+  backdrop-filter: blur(9px);
+}
+
+.contact-comms-status {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: rgba(226, 221, 208, 0.47);
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+
+.contact-comms-status span:first-child {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #adb58e;
+}
+
+.contact-comms nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.contact-comms nav a {
+  padding: 7px 10px;
+  color: #e2ddd0;
+  border-left: 1px solid rgba(226, 221, 208, 0.18);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-decoration: none;
+}
+
+.contact-comms nav a:hover {
+  color: #aeb78a;
+}
+
+@keyframes contactStatusPulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.85);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+/* CONTACTO — AJUSTE DE LEGIBILIDAD */
+
+.contact-interface {
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: #6f7653 rgba(7, 11, 9, 0.35);
+}
+
+.contact-mission-header .screen-label {
+  font-size: 11px;
+}
+
+.contact-mission-header p {
+  font-size: 15px;
+}
+
+.contact-panel-heading,
+.contact-panel-heading b {
+  font-size: 10px;
+}
+
+.contact-player-panel h2 {
+  font-size: 20px;
+}
+
+.contact-player-data dt {
+  font-size: 10px;
+}
+
+.contact-player-data dd {
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.contact-coverage > span {
+  font-size: 10px;
+}
+
+.contact-coverage small {
+  font-size: 9px;
+}
+
+.contact-coverage b {
+  font-size: 10px;
+}
+
+.contact-mission-number small {
+  font-size: 9px;
+}
+
+.contact-mission-card h2 {
+  font-size: clamp(22px, 1.6vw, 28px);
+}
+
+.contact-mission-card > p {
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.contact-mission-tags span,
+.contact-project-types span,
+.contact-specialties span {
+  padding: 7px 9px;
+  font-size: 9px;
+  line-height: 1.25;
+}
+
+.contact-budget-note {
+  font-size: 9px;
+  line-height: 1.4;
+}
+
+.contact-mission-card > a {
+  padding: 13px 14px;
+  font-size: 11px;
+}
+
+.contact-comms-status {
+  font-size: 9px;
+}
+
+.contact-comms nav a {
+  font-size: 10px;
+}
+
+/* PERSONAJE — CONTACTO */
+
+.contact-character {
+  position: absolute;
+  z-index: 4;
+  bottom: -20vh;
+  left: 1%;
+  width: auto;
+  height: min(105vh, 1000px);
+  max-width: 31%;
+  object-fit: contain;
+  object-position: bottom center;
+  pointer-events: none;
+  filter: brightness(0.87) contrast(1.04);
+}
+
+.contact-comms nav {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+}
+
+.contact-comms nav a {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  min-height: 40px;
+  padding: 6px 12px;
+}
+
+.contact-comms nav small {
+  color: #9da67a;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+
+.contact-comms nav b {
+  color: #e2ddd0;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+}

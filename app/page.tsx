@@ -282,6 +282,22 @@ function SkillCategoryIcon({
 const contactWhatsappUrl =
   `https://wa.me/5491134145166?text=${encodeURIComponent(contactMessage)}`;
 
+  const jobContactMessage =
+  "Hola Pablo, vi tu portfolio y me gustaría conversar con vos sobre una oportunidad laboral. La empresa es..., el puesto es... y la modalidad es...";
+
+const jobContactWhatsappUrl =
+  `https://wa.me/5491134145166?text=${encodeURIComponent(
+    jobContactMessage
+  )}`;
+
+const projectContactMessage =
+  "Hola Pablo, vi tu portfolio y quisiera consultarte por un proyecto. Necesitamos..., la fecha estimada es... y el proyecto consiste en...";
+
+const projectContactWhatsappUrl =
+  `https://wa.me/5491134145166?text=${encodeURIComponent(
+    projectContactMessage
+  )}`;
+
 
 const emailAccessUrl =
   `mailto:pabloezequielfontenez@gmail.com?subject=${encodeURIComponent(
@@ -442,7 +458,25 @@ const emailAccessUrl =
         <div className="right-shade" />
         <Back onClick={() => go("menu")} />
         <div className="about-copy"><span className="screen-label">PERFIL / PLAYER 01</span><h1>QUIÉN SOY</h1><p>Soy Pablo Fonteñez, diseñador gráfico con más de 15 años de experiencia. Trabajé en identidad visual, comunicación institucional y diseño de piezas para distintos medios, buscando siempre que cada proyecto sea claro, atractivo y funcional.</p><p>Durante el último año amplié mi trabajo hacia la comunicación digital y audiovisual: contenido para redes, campañas, presentaciones, páginas web, reels y videos institucionales. Me gusta involucrarme en todo el proceso, desde la idea y la organización del contenido hasta el diseño, la edición y su adaptación a cada formato.</p><p>Hoy mi perfil combina diseño gráfico, contenido digital, edición audiovisual, desarrollo web e inteligencia artificial para conectar la idea, la imagen, el movimiento y la experiencia final.</p><button className="about-skills-link" onClick={() => go("skills")}>INVENTARIO DE HABILIDADES <span>→</span></button></div>
-        <div className="contact-chips"><a href="mailto:pabloezequielfontenez@gmail.com">pabloezequielfontenez@gmail.com</a><a href="https://www.linkedin.com/in/pfontenez/" target="_blank">linkedin.com/in/pfontenez/</a><a href="https://wa.me/541134145166?text=Hola%20Pablo%2C%20vi%20tu%20portfolio%20y%20quer%C3%ADa%20contactarte." target="_blank">WhatsApp · 11 3414-5166</a></div>
+        <div className="about-actions">
+  <button
+    className="about-contact-link"
+    onClick={() => go("contact")}
+  >
+    INICIAR CONTACTO
+    <span>→</span>
+  </button>
+
+  <a
+    className="about-cv-link"
+    href="https://drive.google.com/file/d/1wm_KYLpuxhmEhxwrfec-6hTzzZsRfpld/view?usp=drive_link"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    VER / DESCARGAR CV
+    <span>↓</span>
+  </a>
+</div>
       </section>}
 
       {screen === "skills" && (
@@ -886,7 +920,7 @@ const emailAccessUrl =
         </div>}
       </section>}
 
-      {screen === "contact" && (
+     {screen === "contact" && (
   <section className="scene contact-scene">
     <img
       className="scene-bg contact-bg"
@@ -904,33 +938,200 @@ const emailAccessUrl =
       alt="Pablo Fonteñez — Diseñador gráfico"
     />
 
-    <div className="contact-box">
-      <span className="screen-label">FIN DE LA MISIÓN</span>
+    <img
+      className="contact-character"
+      src="/characters/pablo-front.png"
+      alt="Pablo Fonteñez"
+      aria-hidden="true"
+   />
 
-      <h1>MUCHAS GRACIAS</h1>
+    <div className="contact-interface">
+      <header className="contact-mission-header">
+        <span className="screen-label">
+          CENTRO DE OPERACIONES / COMUNICACIONES
+        </span>
 
-      <a href="mailto:pabloezequielfontenez@gmail.com">
-        <small>CORREO</small>
-        pabloezequielfontenez@gmail.com
-      </a>
+        <h1>NUEVA MISIÓN</h1>
 
-      <a
-        href="https://www.linkedin.com/in/pfontenez/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <small>LINKEDIN</small>
-        linkedin.com/in/pfontenez/
-      </a>
+        <p>
+          Seleccioná el tipo de colaboración para establecer contacto.
+        </p>
+      </header>
 
-     <a
-      href={contactWhatsappUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <small>WHATSAPP</small>
-      11 3414-5166
-    </a>
+      <div className="contact-dashboard">
+        <aside className="contact-player-panel">
+          <div className="contact-panel-heading">
+            <span>
+              <i className="contact-status-dot" />
+              PLAYER ONLINE
+            </span>
+
+            <b>DISPONIBLE</b>
+          </div>
+
+          <h2>ESTADO DEL PROFESIONAL</h2>
+
+          <dl className="contact-player-data">
+            <div>
+              <dt>INCORPORACIÓN</dt>
+              <dd>INMEDIATA</dd>
+            </div>
+
+            <div>
+              <dt>EXPERIENCIA</dt>
+              <dd>15+ AÑOS</dd>
+            </div>
+
+            <div>
+              <dt>BASE OPERATIVA</dt>
+              <dd>BUENOS AIRES · ARGENTINA</dd>
+            </div>
+
+            <div>
+              <dt>EQUIPAMIENTO</dt>
+              <dd>PROPIO</dd>
+            </div>
+
+            <div>
+              <dt>IDIOMA DE TRABAJO</dt>
+              <dd>ESPAÑOL</dd>
+            </div>
+          </dl>
+
+          <div className="contact-coverage">
+            <span>COBERTURA OPERATIVA</span>
+
+            <div>
+              <small>ARGENTINA</small>
+              <b>PRESENCIAL · HÍBRIDA · REMOTA</b>
+            </div>
+
+            <div>
+              <small>OTROS PAÍSES</small>
+              <b>REMOTA</b>
+            </div>
+          </div>
+        </aside>
+
+        <div className="contact-missions">
+          <article className="contact-mission-card">
+            <div className="contact-mission-number">
+              <span>01</span>
+              <small>POSICIÓN ESTABLE</small>
+            </div>
+
+            <h2>INCORPORACIÓN AL EQUIPO</h2>
+
+            <p>
+              Disponible para incorporarme a empresas, agencias o equipos
+              creativos. En Argentina puedo trabajar de manera presencial,
+              híbrida o remota. Para oportunidades de otros países, cuento
+              con disponibilidad remota.
+            </p>
+
+            <div className="contact-mission-tags">
+              <span>RELACIÓN DE DEPENDENCIA</span>
+              <span>EQUIPO CREATIVO</span>
+              <span>REMOTO INTERNACIONAL</span>
+            </div>
+
+            <a
+              href={jobContactWhatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              CONTACTAR POR UNA OPORTUNIDAD
+              <span>→</span>
+            </a>
+          </article>
+
+          <article className="contact-mission-card">
+            <div className="contact-mission-number">
+              <span>02</span>
+              <small>COLABORACIÓN FREELANCE</small>
+            </div>
+
+            <h2>INICIAR UN PROYECTO</h2>
+
+            <p>
+              Disponible para proyectos puntuales, campañas o colaboraciones
+              recurrentes en diseño, comunicación digital, contenido
+              audiovisual y desarrollo web.
+            </p>
+
+            <div className="contact-project-types">
+              <span>MISIÓN PUNTUAL</span>
+              <span>CAMPAÑA</span>
+              <span>SOPORTE RECURRENTE</span>
+            </div>
+
+            <div className="contact-specialties">
+              {[
+                "DISEÑO GRÁFICO",
+                "REDES SOCIALES",
+                "IDENTIDAD VISUAL",
+                "PRESENTACIONES",
+                "EDICIÓN DE VIDEO",
+                "DISEÑO WEB",
+                "INTELIGENCIA ARTIFICIAL",
+                "OTRO PROYECTO",
+              ].map((skill) => (
+                <span key={skill}>{skill}</span>
+              ))}
+            </div>
+
+            <small className="contact-budget-note">
+              PRESUPUESTO PERSONALIZADO SEGÚN ALCANCE Y TIEMPOS
+            </small>
+
+            <a
+              href={projectContactWhatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ENVIAR SOLICITUD
+              <span>→</span>
+            </a>
+          </article>
+        </div>
+      </div>
+
+      <footer className="contact-comms">
+        <div className="contact-comms-status">
+          <span>
+            <i className="contact-status-dot" />
+            PLAYER ONLINE
+          </span>
+
+          <span>CANAL SEGURO</span>
+          <span>RESPUESTA ESTIMADA: 24/48 HS</span>
+        </div>
+
+        <nav aria-label="Canales de contacto">
+            <a
+              href={contactWhatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <small></small>
+              <b>11 3414-5166</b>
+            </a>
+
+            <a href="mailto:pabloezequielfontenez@gmail.com">
+              <small></small>
+              <b>pabloezequielfontenez@gmail.com</b>
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/pfontenez/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <small></small>
+              <b>linkedin.com/in/pfontenez</b>
+            </a>
+          </nav>
+      </footer>
     </div>
   </section>
 )}
