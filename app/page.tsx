@@ -2,7 +2,7 @@
 
 import { FormEvent, MouseEvent, useEffect, useRef, useState } from "react";
 
-type Screen = "start" | "menu" | "about" | "skills" | "gallery" | "project" | "web" | "video" | "contact";
+type Screen = "start" | "menu" | "about" | "skills" | "gallery" | "project" | "web" | "web-case" | "video" | "contact";
 type Gallery = "Redes sociales" | "Branding e identidad visual" | "Banners web" | "Inteligencia artificial";
 type SkillSection =
   | "activities"
@@ -10,6 +10,15 @@ type SkillSection =
   | "education"
   | "experience"
   | "software";
+type WebCaseSection =
+  | "context"
+  | "problem"
+  | "objectives"
+  | "architecture"
+  | "uxui"
+  | "development"
+  | "responsive"
+  | "result";  
 
   const skillSections: Array<{
   id: SkillSection;
@@ -34,7 +43,10 @@ const menu: Array<{ label: string; screen?: Screen; gallery?: Gallery }> = [
 
 const galleryAssets: Record<Gallery, string[]> = {
   "Redes sociales": ["/projects/electronics-mexico/redes-01.png", "/projects/chili-beans-mexico/redes-01.png", "/projects/mark-sports/redes-01.png"],
-  "Branding e identidad visual": ["/projects/general-water-company/branding-01.png"],
+  "Branding e identidad visual": [
+  "/projects/general-water-company/branding-01.png",
+  "/projects/manual-identidad-siempre-2026.png",
+],
   "Banners web": ["/projects/banners-web/seleccion-banners.png"],
   "Inteligencia artificial": ["/projects/inteligencia-artificial/seleccion-ia.png"],
 };
@@ -74,9 +86,28 @@ const brandingProjects = [
   {
     name: "GENERAL WATER COMPANY",
     logo: "/projects/general-water-company/logo.png",
-    description: "GWC Store es una empresa internacional especializada en el desarrollo de tecnologías para el tratamiento del agua. En su e-commerce ofrece una amplia gama de productos, incluyendo dispensadores, filtros, ablandadores y más.",
-    sector: "AGUA", agency: "KRAB-E", year: "2023",
-    images: ["/projects/general-water-company/branding-01.png","/projects/general-water-company/branding-02.png"],
+    description:
+      "GWC Store es una empresa internacional especializada en el desarrollo de tecnologías para el tratamiento del agua. En su e-commerce ofrece una amplia gama de productos, incluyendo dispensadores, filtros, ablandadores y más.",
+    sector: "AGUA",
+    agency: "KRAB-E",
+    year: "2023",
+    images: [
+      "/projects/general-water-company/branding-01.png",
+      "/projects/general-water-company/branding-02.png",
+    ],
+  },
+
+  {
+    name: "SIEMPRE — IDENTIDAD VISUAL",
+    logo: "/projects/manual-identidad-siempre-2026.png",
+    description:
+      "Desarrollo del Manual de Identidad Visual Corporativa 2026 de Siempre Salud y Bienestar. Un sistema creado para organizar, unificar y fortalecer la aplicación de la marca en sus diferentes canales de comunicación.",
+    sector: "SALUD Y BIENESTAR",
+    agency: "SIEMPRE",
+    year: "2026",
+    images: ["/projects/manual-identidad-siempre-2026.png"],
+    externalUrl:
+      "https://drive.google.com/file/d/1NMLCMhBJV9bfHcWP5O9BcYy5AfeygSAF/view?usp=drive_link",
   },
 ];
 
@@ -251,6 +282,10 @@ function SkillCategoryIcon({
   const [screen, setScreen] = useState<Screen>("start");
   const [activeSkillSection, setActiveSkillSection] =
   useState<SkillSection | null>(null);
+  const [activeWebCaseSection, setActiveWebCaseSection] =
+  useState<WebCaseSection>("context");
+  const [expandedCaseImage, setExpandedCaseImage] =
+  useState<string | null>(null);
   const [hoveredSkillSection, setHoveredSkillSection] =
   useState<SkillSection | null>(null);
   const [menuBackgroundIndex, setMenuBackgroundIndex] = useState(0);
@@ -394,7 +429,26 @@ const emailAccessUrl =
 }
 
   function openGallery(next: Gallery) { setGallery(next); go("gallery"); }
-  function openProject(index: number) { setSelectedProject(index); setProjectSlide(0); go("project"); }
+  function openProject(index: number) {
+  const externalUrl =
+    gallery === "Branding e identidad visual"
+      ? brandingProjects[index]?.externalUrl
+      : undefined;
+
+  if (externalUrl) {
+    window.open(
+      externalUrl,
+      "_blank",
+      "noopener,noreferrer"
+    );
+
+    return;
+  }
+
+  setSelectedProject(index);
+  setProjectSlide(0);
+  go("project");
+}
   function switchProject(index: number) { setSelectedProject(index); setProjectSlide(0); }
 
   function unlock(e: FormEvent<HTMLFormElement>) {
@@ -804,12 +858,630 @@ const emailAccessUrl =
         <Back onClick={() => go("menu")} />
         <div className="web-header"><span className="screen-label">ARCHIVO / DESARROLLO WEB</span><h1>DISEÑO WEB</h1><p>Proyectos diseñados y desarrollados para experiencias digitales.</p></div>
         <div className="web-projects">
-          {[{name:"SIEMPRE ARGENTINA",preview:"/projects/diseno-web/siempre-argentina.png",url:"https://pfontenez.github.io/siemprearg-nuevo-FINAL-responsive/"},{name:"INVITACIÓN FRANCHESCA",preview:"/projects/diseno-web/invitacion-franchesca.png",url:"https://pfontenez.github.io/invitacion-franchesca/"}].map((project,index) => <button key={project.name} className={`web-project ${!access ? "is-locked" : project.url ? "is-ready" : "is-pending"}`} onClick={() => !access ? setAccessOpen(true) : project.url ? window.open(project.url,"_blank","noopener,noreferrer") : undefined}>
+          {[{name:"SIEMPRE ARGENTINA",preview:"/projects/diseno-web/siempre-argentina.png",url:"https://pfontenez.github.io/siemprearg-nuevo-FINAL-responsive/"},{name:"INVITACIÓN FRANCHESCA",preview:"/projects/diseno-web/invitacion-franchesca.png",url:"https://pfontenez.github.io/invitacion-franchesca/"}].map((project,index) => <button key={project.name} className={`web-project ${!access ? "is-locked" : project.url ? "is-ready" : "is-pending"}`} onClick={() =>
+  !access
+    ? setAccessOpen(true)
+    : index === 0
+      ? go("web-case")
+      : window.open(
+          project.url,
+          "_blank",
+          "noopener,noreferrer"
+        )
+}>
             {project.preview && <img className="web-project-preview" src={project.preview} alt="Vista previa del sitio web de Siempre Argentina" />}
             <span className="web-project-number">0{index + 1}</span><div><small>PROYECTO WEB</small><h2>{access ? project.name : `PROYECTO 0${index + 1}`}</h2><p>{!access ? "CONTENIDO PROTEGIDO" : project.url ? "ABRIR SITIO WEB" : "ENLACE DE GITHUB PENDIENTE"}</p></div><b>{!access ? "NIVEL 2 · INGRESAR CÓDIGO" : project.url ? "EXPLORAR ↗" : "PRÓXIMAMENTE"}</b>
           </button>)}
         </div>
       </section>}
+
+          {screen === "web-case" && (
+      <section className="scene web-case-scene">
+        <img
+          className="scene-bg web-bg"
+          src="/backgrounds/horse-statue.webp"
+          alt="Caso de estudio Siempre Argentina"
+        />
+
+        <div className="web-shade" />
+
+        <Back
+          onClick={() => go("web")}
+          label="VOLVER A PROYECTOS"
+        />
+
+        <div className="web-header">
+          <span className="screen-label">
+            ARCHIVO DE PROYECTO / PRODUCT DESIGN
+          </span>
+
+          <h1>SIEMPRE ARGENTINA</h1>
+
+          <p>
+            Rediseño de experiencia digital y desarrollo web a medida.
+          </p>
+        </div>
+
+        <div className="web-case-layout">
+  <aside className="web-case-sidebar">
+    <div className="web-case-meta">
+      <span>DATOS DEL PROYECTO</span>
+
+      <dl>
+        <div>
+            <dt>ROL PRINCIPAL</dt>
+            <dd>DISEÑADOR MULTIMEDIA</dd>
+          </div>
+
+          <div>
+            <dt>ÁREA</dt>
+            <dd>MARKETING</dd>
+          </div>
+
+          <div>
+            <dt>APORTE ADICIONAL</dt>
+            <dd>UX/UI + DESARROLLO WEB</dd>
+          </div>
+
+        <div>
+          <dt>ALCANCE</dt>
+          <dd>REDISEÑO INTEGRAL</dd>
+        </div>
+
+        <div>
+          <dt>TECNOLOGÍA</dt>
+          <dd>HTML · CSS · JAVASCRIPT</dd>
+        </div>
+
+        <div>
+          <dt>IMPLEMENTACIÓN</dt>
+          <dd>SIN PLANTILLAS</dd>
+        </div>
+      </dl>
+    </div>
+
+    <nav
+      className="web-case-navigation"
+      aria-label="Secciones del caso de estudio"
+    >
+      {([
+        { id: "context", label: "CONTEXTO" },
+        { id: "problem", label: "PROBLEMA" },
+        { id: "objectives", label: "OBJETIVOS" },
+        { id: "architecture", label: "ARQUITECTURA" },
+        { id: "uxui", label: "DECISIONES UX/UI" },
+        { id: "development", label: "DESARROLLO" },
+        { id: "responsive", label: "RESPONSIVE" },
+        { id: "result", label: "RESULTADO" },
+      ] as const).map((section, index) => (
+        <button
+          key={section.id}
+          className={
+            activeWebCaseSection === section.id
+              ? "is-active"
+              : ""
+          }
+          onClick={() =>
+            setActiveWebCaseSection(section.id)
+          }
+        >
+          <span>
+            {String(index + 1).padStart(2, "0")}
+          </span>
+
+          <b>{section.label}</b>
+        </button>
+      ))}
+    </nav>
+  </aside>
+
+  <div className="web-case-panel">
+  <div className="web-case-panel-top">
+    <span>EXPEDIENTE DE PRODUCTO</span>
+
+    <a
+      href="https://pfontenez.github.io/siemprearg-nuevo-FINAL-responsive/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      VER SITIO EN VIVO
+      <b>↗</b>
+    </a>
+  </div>
+
+  {activeWebCaseSection === "context" && (
+    <article className="web-case-section">
+      <span className="web-case-section-number">
+        SECCIÓN 01 / 08
+      </span>
+
+      <h2>CONTEXTO</h2>
+
+      <p className="web-case-lead">
+        Siempre Argentina es una empresa de salud y bienestar
+        que ofrece servicios para familias, empresas y
+        profesionales.
+        Mi rol principal dentro de Siempre Argentina se desarrolló 
+        en el área de Marketing como diseñador multimedia, combinando 
+        diseño gráfico, contenido digital y edición de video. El rediseño 
+        del sitio fue un aporte adicional a mis responsabilidades habituales, 
+        desde el cual amplié mi participación hacia el análisis UX/UI, la 
+        organización de contenidos, el diseño de interfaz y el desarrollo web.
+
+      </p>
+
+      <p>
+        El sitio institucional existente estaba desarrollado
+        sobre una plantilla de WordPress. La plataforma reunía
+        una gran cantidad de servicios, públicos y objetivos de
+        contacto dentro de una misma estructura.
+      </p>
+
+      <p>
+        La nueva propuesta fue diseñada y desarrollada desde
+        cero con HTML, CSS y JavaScript, sin utilizar plantillas
+        prediseñadas. Esto permitió trabajar la estructura, los
+        componentes y el comportamiento responsive en función
+        de las necesidades reales del proyecto.
+      </p>
+
+     <div className="web-case-visual-comparison">
+  <figure>
+    <div className="web-case-image-heading">
+      <span>ANTES</span>
+      <b>SITIO INSTITUCIONAL EXISTENTE</b>
+    </div>
+
+    <button
+      type="button"
+      className="web-case-image-button"
+      onClick={() =>
+        setExpandedCaseImage(
+          "/projects/diseno-web/siempre-case-study/01-sitio-anterior-wordpress.png"
+        )
+      }
+      aria-label="Ampliar captura del sitio anterior"
+    >
+      <img
+        src="/projects/diseno-web/siempre-case-study/01-sitio-anterior-wordpress.png"
+        alt="Sitio anterior de Siempre Argentina desarrollado en WordPress"
+      />
+      <span>AMPLIAR ↗</span>
+    </button>
+
+    <figcaption>
+      Estructura basada en una plantilla de WordPress.
+    </figcaption>
+  </figure>
+
+  <figure>
+    <div className="web-case-image-heading">
+      <span>DESPUÉS</span>
+      <b>PROPUESTA DESARROLLADA A MEDIDA</b>
+    </div>
+
+    <button
+      type="button"
+      className="web-case-image-button"
+      onClick={() =>
+        setExpandedCaseImage(
+          "/projects/diseno-web/siempre-case-study/02-propuesta-nueva-desktop.png"
+        )
+      }
+      aria-label="Ampliar captura de la nueva propuesta"
+    >
+      <img
+        src="/projects/diseno-web/siempre-case-study/02-propuesta-nueva-desktop.png"
+        alt="Nueva propuesta del sitio de Siempre Argentina"
+      />
+      <span>AMPLIAR ↗</span>
+    </button>
+
+    <figcaption>
+      Nueva arquitectura, interfaz y desarrollo en HTML,
+      CSS y JavaScript.
+    </figcaption>
+  </figure>
+</div>
+    </article>
+  )}
+
+  {activeWebCaseSection === "problem" && (
+    <article className="web-case-section">
+      <span className="web-case-section-number">
+        SECCIÓN 02 / 08
+      </span>
+
+      <h2>PROBLEMA</h2>
+
+      <p className="web-case-lead">
+        El desafío principal no era solamente visual: había
+        que organizar una experiencia con múltiples públicos,
+        servicios y recorridos.
+      </p>
+
+      <ul className="web-case-list">
+        <li>
+          Familias y empresas ingresaban con necesidades
+          diferentes, pero compartían recorridos similares.
+        </li>
+
+        <li>
+          La cantidad de categorías y subcategorías dificultaba
+          encontrar rápidamente la información.
+        </li>
+
+        <li>
+          Se repetían llamados a la acción genéricos como
+          “Conocé más” y “Ver más”.
+        </li>
+
+        <li>
+          La página de inicio concentraba demasiada información
+          y niveles de lectura.
+        </li>
+
+        <li>
+          La estructura de la plantilla condicionaba la
+          adaptación de contenidos y componentes.
+        </li>
+
+        <li>
+          La experiencia mobile necesitaba una reorganización
+          específica y no una simple reducción del escritorio.
+        </li>
+      </ul>
+    </article>
+  )}
+
+  {activeWebCaseSection === "objectives" && (
+    <article className="web-case-section">
+      <span className="web-case-section-number">
+        SECCIÓN 03 / 08
+      </span>
+
+      <h2>OBJETIVOS</h2>
+
+      <p className="web-case-lead">
+        Transformar un sitio cargado de información en una
+        experiencia clara, previsible y orientada al contacto.
+      </p>
+
+      <ul className="web-case-list">
+        <li>
+          Diferenciar los recorridos para personas y empresas.
+        </li>
+
+        <li>
+          Simplificar el acceso a planes, servicios y canales
+          de atención.
+        </li>
+
+        <li>
+          Mejorar la jerarquía visual y la legibilidad.
+        </li>
+
+        <li>
+          Utilizar llamados a la acción relacionados con cada
+          necesidad.
+        </li>
+
+        <li>
+          Mantener la identidad y la credibilidad de una
+          empresa vinculada a la salud.
+        </li>
+
+        <li>
+          Construir una experiencia responsive funcional en
+          diferentes dispositivos.
+        </li>
+      </ul>
+    </article>
+  )}
+
+  {activeWebCaseSection === "architecture" && (
+    <article className="web-case-section">
+      <span className="web-case-section-number">
+        SECCIÓN 04 / 08
+      </span>
+
+      <h2>ARQUITECTURA</h2>
+
+      <p className="web-case-lead">
+        La información se reorganizó según el tipo de usuario
+        y la tarea que necesitaba realizar.
+      </p>
+
+      <div className="web-case-route-grid">
+        <div>
+          <span>RUTA 01</span>
+          <h3>PERSONAS Y FAMILIAS</h3>
+          <p>
+            Planes, acompañantes de salud, internación
+            domiciliaria y profesionales.
+          </p>
+        </div>
+
+        <div>
+          <span>RUTA 02</span>
+          <h3>EMPRESAS</h3>
+          <p>
+            Servicios corporativos, prestaciones, auditoría,
+            equipamiento y soluciones institucionales.
+          </p>
+        </div>
+
+        <div>
+          <span>RUTA 03</span>
+          <h3>INFORMACIÓN INSTITUCIONAL</h3>
+          <p>
+            Empresa, equipo, franquicias, contenidos y
+            oportunidades laborales.
+          </p>
+        </div>
+
+        <div>
+          <span>RUTA 04</span>
+          <h3>CONTACTO</h3>
+          <p>
+            WhatsApp, formularios y accesos directos ubicados
+            según el contexto.
+          </p>
+        </div>
+      </div>
+    </article>
+  )}
+
+  {activeWebCaseSection === "uxui" && (
+    <article className="web-case-section">
+      <span className="web-case-section-number">
+        SECCIÓN 05 / 08
+      </span>
+
+      <h2>DECISIONES UX/UI</h2>
+
+      <p className="web-case-lead">
+        Cada decisión visual respondió a un problema de
+        comprensión, navegación o contacto.
+      </p>
+
+      <div className="web-case-decisions">
+        <div>
+          <span>01</span>
+          <h3>RECORRIDOS DIFERENCIADOS</h3>
+          <p>
+            Separé los accesos para familias y empresas porque
+            ambos públicos ingresan con objetivos diferentes.
+          </p>
+        </div>
+
+        <div>
+          <span>02</span>
+          <h3>JERARQUÍA DE CONTENIDOS</h3>
+          <p>
+            Organicé los servicios en categorías para reducir
+            la cantidad de decisiones simultáneas.
+          </p>
+        </div>
+
+        <div>
+          <span>03</span>
+          <h3>ACCIONES CONTEXTUALES</h3>
+          <p>
+            Reemplacé acciones genéricas por llamados
+            vinculados con el contenido de cada sección.
+          </p>
+        </div>
+
+        <div>
+          <span>04</span>
+          <h3>SISTEMA CONSISTENTE</h3>
+          <p>
+            Unifiqué botones, tarjetas, jerarquías, espaciados
+            y comportamientos para facilitar el aprendizaje.
+          </p>
+        </div>
+      </div>
+    </article>
+  )}
+
+      {activeWebCaseSection === "development" && (
+        <article className="web-case-section">
+          <span className="web-case-section-number">
+            SECCIÓN 06 / 08
+          </span>
+
+          <h2>DESARROLLO</h2>
+
+          <p className="web-case-lead">
+            La propuesta fue implementada desde cero para tener
+            control directo sobre la estructura y la experiencia.
+          </p>
+
+          <p>
+            El sitio fue desarrollado con HTML, CSS y JavaScript,
+            sin utilizar una plantilla prediseñada. Cada sección,
+            componente y comportamiento se construyó en función
+            del contenido y de los recorridos definidos.
+            Dentro de este aporte adicional me encargué de analizar 
+            el sitio existente, reorganizar los contenidos, definir 
+            recorridos de navegación, diseñar la interfaz, desarrollar 
+            la propuesta, revisar enlaces y realizar pruebas funcionales 
+            en diferentes tamaños de pantalla.
+
+          </p>
+
+          <div className="web-case-tech">
+            <div>
+              <small>ESTRUCTURA</small>
+              <b>HTML SEMÁNTICO</b>
+            </div>
+
+            <div>
+              <small>INTERFAZ</small>
+              <b>CSS RESPONSIVE</b>
+            </div>
+
+            <div>
+              <small>INTERACCIÓN</small>
+              <b>JAVASCRIPT</b>
+            </div>
+
+            <div>
+              <small>CONTROL</small>
+              <b>DESARROLLO A MEDIDA</b>
+            </div>
+          </div>
+
+          <p>
+            Mi participación incluyó el análisis del sitio
+            anterior, la reorganización de contenidos, el diseño
+            de interfaz, la implementación, la revisión de enlaces
+            y las pruebas funcionales.
+          </p>
+        </article>
+      )}
+
+      {activeWebCaseSection === "responsive" && (
+        <article className="web-case-section">
+          <span className="web-case-section-number">
+            SECCIÓN 07 / 08
+          </span>
+
+          <h2>RESPONSIVE</h2>
+
+          <p className="web-case-lead">
+            La versión mobile fue trabajada como una experiencia
+            específica, no como una reducción automática de la
+            versión de escritorio.
+          </p>
+
+          <figure className="web-case-responsive-visual">
+  <button
+    type="button"
+    className="web-case-image-button"
+    onClick={() =>
+      setExpandedCaseImage(
+        "/projects/diseno-web/siempre-case-study/03-propuesta-nueva-mobile.png"
+      )
+    }
+    aria-label="Ampliar captura de la versión mobile"
+  >
+    <img
+      src="/projects/diseno-web/siempre-case-study/03-propuesta-nueva-mobile.png"
+      alt="Versión responsive del sitio de Siempre Argentina"
+    />
+    <span>AMPLIAR ↗</span>
+  </button>
+
+  <figcaption>
+    Adaptación mobile de la propuesta desarrollada a medida.
+  </figcaption>
+</figure>
+
+          <ul className="web-case-list">
+            <li>
+              Reorganización vertical de los bloques.
+            </li>
+
+            <li>
+              Simplificación del menú y de los niveles de
+              navegación.
+            </li>
+
+            <li>
+              Ajuste de tipografías, espaciados y áreas táctiles.
+            </li>
+
+            <li>
+              Reubicación de imágenes según la jerarquía del
+              contenido.
+            </li>
+
+            <li>
+              Botones y formularios adaptados al uso táctil.
+            </li>
+
+            <li>
+              Pruebas de lectura, navegación y funcionamiento en
+              diferentes tamaños de pantalla.
+            </li>
+          </ul>
+        </article>
+      )}
+
+      {activeWebCaseSection === "result" && (
+        <article className="web-case-section">
+          <span className="web-case-section-number">
+            SECCIÓN 08 / 08
+          </span>
+
+          <h2>RESULTADO</h2>
+
+          <p className="web-case-lead">
+            El resultado es una propuesta más clara, consistente
+            y adaptable, construida a partir de las necesidades del
+            contenido y sus usuarios.
+          </p>
+
+          <ul className="web-case-list">
+            <li>
+              Recorridos diferenciados para personas y empresas.
+            </li>
+
+            <li>
+              Mayor claridad en la presentación de los servicios.
+            </li>
+
+            <li>
+              Jerarquías y componentes visuales consistentes.
+            </li>
+
+            <li>
+              Acceso más directo a los canales de contacto.
+            </li>
+
+            <li>
+              Mayor control sobre la implementación y el
+              comportamiento responsive.
+            </li>
+          </ul>
+
+          <blockquote className="web-case-conclusion">
+            De una plantilla generalista a una experiencia digital
+            diseñada y desarrollada a medida.
+          </blockquote>
+        </article>
+        )}
+        </div>
+  </div>
+
+  {expandedCaseImage && (
+    <div
+      className="web-case-lightbox"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Vista ampliada del proyecto"
+      onClick={() => setExpandedCaseImage(null)}
+    >
+      <button
+        type="button"
+        className="web-case-lightbox-close"
+        onClick={() => setExpandedCaseImage(null)}
+        aria-label="Cerrar imagen ampliada"
+      >
+        ×
+      </button>
+
+      <img
+        src={expandedCaseImage}
+        alt="Vista ampliada del caso de estudio Siempre Argentina"
+        onClick={(event) => event.stopPropagation()}
+      />
+    </div>
+  )}
+</section>
+)}
       {screen === "video" && (
   <section className="scene video-scene">
     <img
