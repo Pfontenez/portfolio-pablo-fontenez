@@ -4422,3 +4422,264 @@ npx.cmd vite {
   min-height: 66px;
 }
 }
+
+/* Área clickeable del botón Volver — casos de estudio */
+
+.web-case-scene > .back {
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 10px 14px;
+  pointer-events: auto;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.web-case-scene > .back span,
+.web-case-scene > .back b {
+  pointer-events: none;
+}
+
+.oc-case-brand-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 26px;
+}
+
+.oc-case-brand-grid figure {
+  margin: 0;
+  padding: 18px;
+  border: 1px solid rgba(111, 118, 83, 0.65);
+  background: rgba(9, 12, 10, 0.58);
+}
+
+.oc-case-brand-grid img {
+  display: block;
+  width: 100%;
+  height: 230px;
+  object-fit: contain;
+}
+
+.oc-case-brand-grid figcaption {
+  margin-top: 12px;
+  color: rgba(226, 221, 208, 0.72);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+@media (max-width: 700px) {
+  .oc-case-brand-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .oc-case-brand-grid img {
+    height: 200px;
+  }
+}
+
+.oc-case-prototype-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(440px, 100%);
+  margin: 26px auto 0;
+  padding: 16px 18px;
+  border: 1px solid rgba(174, 182, 138, 0.7);
+  background: rgba(111, 118, 83, 0.18);
+  color: #e2ddd0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-decoration: none;
+  transition: 0.25s ease;
+}
+
+.oc-case-prototype-link:hover {
+  border-color: #e2ddd0;
+  background: rgba(111, 118, 83, 0.42);
+}
+
+.oc-case-prototype-link b {
+  font-size: 18px;
+}
+
+/* Habilitar ampliación de imágenes — Objetivos Claros */
+
+.oc-case-scene .web-case-responsive-visual {
+  position: relative;
+  z-index: 20;
+  pointer-events: auto;
+}
+
+.oc-case-scene .web-case-image-button {
+  position: relative;
+  z-index: 21;
+  pointer-events: auto;
+  cursor: zoom-in;
+}
+
+.oc-case-scene .web-case-image-button img,
+.oc-case-scene .web-case-image-button span {
+  pointer-events: none;
+}
+
+/* Tres proyectos — Diseño web y UX/UI */
+
+.web-projects {
+  z-index: 6;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.web-project {
+  min-width: 0;
+}
+
+.web-project h2 {
+  max-width: calc(100% - 90px);
+  font-size: clamp(24px, 2vw, 36px);
+  line-height: 1;
+  overflow-wrap: normal;
+}
+
+.character-web {
+  z-index: 3;
+}
+
+/* Diseño web y UX/UI — estructura tipo galería */
+
+@media (min-width: 1001px) {
+  .web-scene .character-web {
+  z-index: 3;
+  left: 1.5% !important;
+  bottom: -5%;
+  width: auto;
+  height: 88%;
+  object-fit: contain;
+  object-position: left bottom;
+  transform: none !important;
+}
+
+  .web-scene .web-header {
+    top: 9%;
+    right: 4%;
+    left: 22%;
+    width: auto;
+    text-align: left;
+  }
+
+  .web-scene .web-header h1 {
+    margin: 10px 0 12px;
+    font-size: clamp(48px, 5vw, 82px);
+    line-height: 0.95;
+  }
+
+  .web-scene .web-header p {
+    margin: 0;
+    font-size: 18px;
+  }
+
+  .web-scene .web-projects {
+    z-index: 6;
+    top: 36%;
+    right: 3%;
+    bottom: 8%;
+    left: 22%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    width: auto;
+    height: auto;
+  }
+
+  .web-scene .web-project {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+  }
+
+  .web-scene .web-project h2 {
+    max-width: calc(100% - 30px);
+    font-size: clamp(26px, 2vw, 38px);
+    line-height: 0.95;
+  }
+}
+
+/* Diseño web y UX/UI — mobile */
+
+@media (max-width: 700px) {
+  .web-scene {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .web-scene .web-header {
+    top: 105px;
+    right: 20px;
+    left: 20px;
+    width: auto;
+    text-align: left;
+  }
+
+  .web-scene .web-header h1 {
+    margin: 10px 0 14px;
+    font-size: 42px;
+    line-height: 0.95;
+  }
+
+  .web-scene .web-header p {
+    font-size: 16px;
+    line-height: 1.4;
+  }
+
+  .web-scene .character-web {
+    top: 260px;
+    bottom: auto;
+    left: 50% !important;
+    width: auto;
+    height: 470px;
+    opacity: 0.9;
+    object-fit: contain;
+    object-position: center bottom;
+    transform: translateX(-50%) !important;
+  }
+
+  .web-scene .web-projects {
+    position: relative;
+    inset: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+    width: auto;
+    height: auto;
+    margin: 700px 14px 100px;
+  }
+
+  .web-scene .web-project {
+    width: 100%;
+    height: 420px;
+    min-height: 420px;
+  }
+
+  .web-scene .web-project h2 {
+    max-width: calc(100% - 30px);
+    font-size: 34px;
+    line-height: 0.95;
+  }
+
+  .web-scene .web-project-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+@media (max-width: 700px) {
+  .oc-case-scene .web-case-layout {
+    margin-top: 295px;
+  }
+}

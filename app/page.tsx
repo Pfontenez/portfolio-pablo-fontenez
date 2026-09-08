@@ -2,7 +2,7 @@
 
 import { FormEvent, MouseEvent, useEffect, useRef, useState } from "react";
 
-type Screen = "start" | "menu" | "about" | "skills" | "gallery" | "project" | "web" | "web-case" | "video" | "contact";
+type Screen = "start" | "menu" | "about" | "skills" | "gallery" | "project" | "web" | "web-case" | "oc-case" | "video" | "contact";
 type Gallery = "Redes sociales" | "Branding e identidad visual" | "Banners web" | "Inteligencia artificial";
 type SkillSection =
   | "activities"
@@ -18,6 +18,16 @@ type WebCaseSection =
   | "uxui"
   | "development"
   | "responsive"
+  | "result";  
+type OcCaseSection =
+  | "context"
+  | "problem"
+  | "research"
+  | "users"
+  | "architecture"
+  | "wireframes"
+  | "ui"
+  | "prototype"
   | "result";  
 
   const skillSections: Array<{
@@ -37,7 +47,7 @@ const menu: Array<{ label: string; screen?: Screen; gallery?: Gallery }> = [
   { label: "Branding e identidad visual", screen: "gallery", gallery: "Branding e identidad visual" },
   { label: "Banners web", screen: "gallery", gallery: "Banners web" },
   { label: "Edición de video", screen: "video" },
-  { label: "Diseño web", screen: "web" },
+  { label: "Diseño web y UX/UI", screen: "web" },
   { label: "Inteligencia artificial", screen: "gallery", gallery: "Inteligencia artificial" },
 ];
 
@@ -284,6 +294,8 @@ function SkillCategoryIcon({
   useState<SkillSection | null>(null);
   const [activeWebCaseSection, setActiveWebCaseSection] =
   useState<WebCaseSection>("context");
+  const [activeOcCaseSection, setActiveOcCaseSection] =
+  useState<OcCaseSection>("context");
   const [expandedCaseImage, setExpandedCaseImage] =
   useState<string | null>(null);
   const [hoveredSkillSection, setHoveredSkillSection] =
@@ -856,24 +868,791 @@ const emailAccessUrl =
         <div className="web-shade" />
         <img className="scene-character character-web" src="/characters/pablo-web.png" alt="Pablo como explorador frente a sus proyectos web" />
         <Back onClick={() => go("menu")} />
-        <div className="web-header"><span className="screen-label">ARCHIVO / DESARROLLO WEB</span><h1>DISEÑO WEB</h1><p>Proyectos diseñados y desarrollados para experiencias digitales.</p></div>
-        <div className="web-projects">
-          {[{name:"SIEMPRE ARGENTINA",preview:"/projects/diseno-web/siempre-argentina.png",url:"https://pfontenez.github.io/siemprearg-nuevo-FINAL-responsive/"},{name:"INVITACIÓN FRANCHESCA",preview:"/projects/diseno-web/invitacion-franchesca.png",url:"https://pfontenez.github.io/invitacion-franchesca/"}].map((project,index) => <button key={project.name} className={`web-project ${!access ? "is-locked" : project.url ? "is-ready" : "is-pending"}`} onClick={() =>
+<div className="web-header">
+  <span className="screen-label">
+    ARCHIVO / PRODUCTOS DIGITALES
+  </span>
+
+  <h1>DISEÑO WEB Y UX/UI</h1>
+
+  <p>
+    Sitios, aplicaciones y casos de estudio desarrollados
+    desde la estrategia hasta la experiencia final.
+  </p>
+</div>        
+<div className="web-projects">
+          {[
+  {
+    name: "SIEMPRE ARGENTINA",
+    preview: "/projects/diseno-web/siempre-argentina.png",
+    url: "https://pfontenez.github.io/siemprearg-nuevo-FINAL-responsive/",
+  },
+  {
+    name: "OBJETIVOS CLAROS",
+    preview: "/projects/ux-ui/objetivos-claros/01-portada-objetivos-claros.png",
+    url: "",
+  },
+  {
+    name: "INVITACIÓN FRANCHESCA",
+    preview: "/projects/diseno-web/invitacion-franchesca.png",
+    url: "https://pfontenez.github.io/invitacion-franchesca/",
+  },
+].map((project,index) => <button
+  key={project.name}
+  className={`web-project ${
+    !access ? "is-locked" : "is-ready"
+  }`}
+ onClick={() =>
   !access
     ? setAccessOpen(true)
     : index === 0
       ? go("web-case")
-      : window.open(
-          project.url,
-          "_blank",
-          "noopener,noreferrer"
-        )
-}>
-            {project.preview && <img className="web-project-preview" src={project.preview} alt="Vista previa del sitio web de Siempre Argentina" />}
-            <span className="web-project-number">0{index + 1}</span><div><small>PROYECTO WEB</small><h2>{access ? project.name : `PROYECTO 0${index + 1}`}</h2><p>{!access ? "CONTENIDO PROTEGIDO" : project.url ? "ABRIR SITIO WEB" : "ENLACE DE GITHUB PENDIENTE"}</p></div><b>{!access ? "NIVEL 2 · INGRESAR CÓDIGO" : project.url ? "EXPLORAR ↗" : "PRÓXIMAMENTE"}</b>
-          </button>)}
+      : index === 1
+        ? go("oc-case")
+        : window.open(
+            project.url,
+            "_blank",
+            "noopener,noreferrer"
+          )
+}
+>
+           {project.preview && (
+  <img
+    className="web-project-preview"
+    src={project.preview}
+    alt={`Vista previa de ${project.name}`}
+  />
+)}
+
+<span className="web-project-number">
+  0{index + 1}
+</span>
+
+<div>
+  <small>
+    {index === 1 ? "CASO UX/UI" : "PROYECTO WEB"}
+  </small>
+
+  <h2>
+    {access
+      ? project.name
+      : `PROYECTO 0${index + 1}`}
+  </h2>
+
+  <p>
+    {!access
+      ? "CONTENIDO PROTEGIDO"
+      : index === 0
+        ? "VER CASO DE ESTUDIO"
+        : index === 1
+          ? "EXPLORAR PROCESO UX/UI"
+          : "ABRIR SITIO WEB"}
+  </p>
+</div>
+
+<b>
+  {!access
+    ? "NIVEL 2 · INGRESAR CÓDIGO"
+    : "EXPLORAR ↗"}
+</b>
+</button>
+)}
         </div>
       </section>}
+
+      {screen === "oc-case" && (
+  <section className="scene web-case-scene oc-case-scene">
+    <img
+      className="scene-bg web-bg"
+      src="/backgrounds/horse-statue.webp"
+      alt="Caso de estudio de la aplicación Objetivos Claros"
+    />
+
+    <div className="web-shade" />
+
+    <Back
+      onClick={() => go("web")}
+      label="VOLVER A PROYECTOS"
+    />
+
+    <div className="web-header">
+      <span className="screen-label">
+        ARCHIVO DE PROYECTO / DISEÑO UX/UI
+      </span>
+
+      <h1>OBJETIVOS CLAROS</h1>
+
+      <p>
+        Investigación, diseño y prototipo de una aplicación móvil
+        orientada al entrenamiento y al cumplimiento de objetivos.
+      </p>
+    </div>
+    <div className="web-case-layout">
+  <aside className="web-case-sidebar">
+    <div className="web-case-meta">
+      <span>DATOS DEL PROYECTO</span>
+
+      <dl>
+        <div>
+          <dt>ROL</dt>
+          <dd>DISEÑADOR UX/UI</dd>
+        </div>
+
+        <div>
+          <dt>PRODUCTO</dt>
+          <dd>APLICACIÓN MÓVIL</dd>
+        </div>
+
+        <div>
+          <dt>PLATAFORMA</dt>
+          <dd>ANDROID</dd>
+        </div>
+
+        <div>
+          <dt>ALCANCE</dt>
+          <dd>UX · UI · PROTOTIPO</dd>
+        </div>
+
+        <div>
+          <dt>HERRAMIENTAS</dt>
+          <dd>FIGMA · PHOTOSHOP</dd>
+        </div>
+
+        <div>
+            <dt>TIPO</dt>
+            <dd>PROYECTO ACADÉMICO</dd>
+          </div>
+
+          <div>
+            <dt>FORMACIÓN</dt>
+            <dd>CODERHOUSE</dd>
+          </div>
+
+          <div>
+            <dt>AÑO</dt>
+            <dd>2022</dd>
+          </div>
+      </dl>
+    </div>
+
+    <nav
+      className="web-case-navigation"
+      aria-label="Secciones del caso Objetivos Claros"
+    >
+      {([
+        { id: "context", label: "CONTEXTO" },
+        { id: "problem", label: "PROBLEMA" },
+        { id: "research", label: "INVESTIGACIÓN" },
+        { id: "users", label: "USUARIOS" },
+        { id: "architecture", label: "ARQUITECTURA" },
+        { id: "wireframes", label: "WIREFRAMES" },
+        { id: "ui", label: "DISEÑO UI" },
+        { id: "prototype", label: "PROTOTIPO" },
+        { id: "result", label: "RESULTADO" },
+      ] as const).map((section, index) => (
+        <button
+          key={section.id}
+          className={
+            activeOcCaseSection === section.id
+              ? "is-active"
+              : ""
+          }
+          onClick={() =>
+            setActiveOcCaseSection(section.id)
+          }
+        >
+          <span>
+            {String(index + 1).padStart(2, "0")}
+          </span>
+
+          <b>{section.label}</b>
+        </button>
+      ))}
+    </nav>
+  </aside>
+
+  <div className="web-case-panel">
+    <div className="web-case-panel-header">
+      <span>EXPEDIENTE DE PRODUCTO</span>
+
+      <a
+        href="https://www.behance.net/gallery/144965909/UX-UI-App-OC"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="web-case-live-link"
+      >
+        VER PROYECTO ORIGINAL <b>↗</b>
+      </a>
+    </div>
+
+    {activeOcCaseSection === "context" && (
+  <article className="web-case-section">
+    <span className="web-case-section-number">
+      SECCIÓN 01 / 09
+    </span>
+
+    <h2>CONTEXTO</h2>
+
+    <p className="web-case-lead">
+      Objetivos Claros fue desarrollado como proyecto final de
+      formación UX/UI en Coderhouse, abordando el proceso de diseño
+      de producto desde la investigación hasta el prototipo funcional.
+    </p>
+
+    <p>
+      La propuesta consistió en diseñar una herramienta integral de
+      entrenamiento cuyo diferencial principal fuera reunir distintos
+      tipos de cronómetros configurables dentro de una sola aplicación.
+      Esto permitiría adaptar la experiencia a diferentes sistemas y
+      modalidades de entrenamiento, especialmente vinculadas al CrossFit.
+    </p>
+
+    <p>
+      La aplicación también incorporaría rutinas preestablecidas,
+      precalentamientos, WODs, una guía visual de movimientos, seguimiento
+      del progreso semanal y la posibilidad de trabajar con un entrenador
+      online mediante rutinas personalizadas y comunicación por chat.
+    </p>
+
+    <p>
+      El proceso incluyó investigación, definición de usuarios,
+      análisis de productos similares, arquitectura de información,
+      recorridos de navegación, wireframes, pruebas de usabilidad,
+      iteraciones de diseño y construcción de la interfaz final.
+    </p>
+
+    <div className="web-case-tech">
+      <span>CRONÓMETROS CONFIGURABLES</span>
+      <span>RUTINAS Y WODS</span>
+      <span>GUÍA DE MOVIMIENTOS</span>
+      <span>PROGRESO SEMANAL</span>
+      <span>ENTRENADOR ONLINE</span>
+      <span>CHAT PERSONALIZADO</span>
+    </div>
+  </article>
+)}
+{activeOcCaseSection === "problem" && (
+  <article className="web-case-section">
+    <span className="web-case-section-number">
+      SECCIÓN 02 / 09
+    </span>
+
+    <h2>PROBLEMA</h2>
+
+    <p className="web-case-lead">
+      Las personas que realizan entrenamientos funcionales suelen
+      depender de diferentes herramientas para cronometrar ejercicios,
+      consultar rutinas, revisar movimientos y registrar su progreso.
+    </p>
+
+    <p>
+      Esta fragmentación obliga a cambiar constantemente entre
+      aplicaciones, anotaciones y canales de comunicación, interrumpiendo
+      el entrenamiento y dificultando la construcción de una experiencia
+      organizada y consistente.
+    </p>
+
+    <p>
+      Para quienes recién comienzan, además, los nombres de los ejercicios,
+      la estructura de los WODs y los distintos formatos de cronómetro
+      pueden resultar difíciles de comprender sin una guía accesible.
+    </p>
+
+    <div className="web-case-conclusion">
+      <strong>DESAFÍO DE DISEÑO</strong>
+
+      <p>
+        Cómo reunir en una sola aplicación las herramientas necesarias
+        para planificar, ejecutar y registrar un entrenamiento, permitiendo
+        al mismo tiempo recibir acompañamiento profesional personalizado.
+      </p>
+    </div>
+  </article>
+)}
+
+{activeOcCaseSection === "research" && (
+  <article className="web-case-section">
+    <span className="web-case-section-number">
+      SECCIÓN 03 / 09
+    </span>
+
+    <h2>INVESTIGACIÓN</h2>
+
+    <p className="web-case-lead">
+      La investigación se enfocó en comprender cómo entrenan las
+      personas, qué herramientas utilizan y cuáles son las principales
+      dificultades que aparecen durante la actividad.
+    </p>
+
+    <p>
+      El análisis permitió ordenar las necesidades del producto,
+      identificar distintos perfiles de usuario y reconocer oportunidades
+      para integrar cronómetros, rutinas, movimientos y seguimiento dentro
+      de una misma experiencia.
+    </p>
+
+    <ul className="web-case-list">
+      <li>
+        Definición de arquetipos y necesidades principales.
+      </li>
+
+      <li>
+        Construcción de puntos de vista para orientar el diseño.
+      </li>
+
+      <li>
+        Benchmark de aplicaciones y herramientas de entrenamiento.
+      </li>
+
+      <li>
+        Identificación de funcionalidades prioritarias.
+      </li>
+
+      <li>
+        Pruebas de usabilidad e iteraciones sobre la propuesta.
+      </li>
+    </ul>
+
+    <div className="web-case-tech">
+      <span>ARQUETIPOS</span>
+      <span>POV</span>
+      <span>BENCHMARK</span>
+      <span>USABILIDAD</span>
+      <span>ITERACIÓN</span>
+    </div>
+  </article>
+)}
+
+{activeOcCaseSection === "users" && (
+  <article className="web-case-section">
+    <span className="web-case-section-number">
+      SECCIÓN 04 / 09
+    </span>
+
+    <h2>USUARIOS</h2>
+
+    <p className="web-case-lead">
+      La primera etapa del producto fue diseñada exclusivamente para
+      personas que entrenan y necesitan organizar su actividad desde
+      una única herramienta móvil.
+    </p>
+
+    <p>
+      El usuario principal puede utilizar distintos cronómetros,
+      acceder a rutinas preestablecidas, consultar movimientos y
+      registrar su progreso semanal. También puede recibir rutinas y
+      comunicarse con un entrenador online desde su propia experiencia.
+    </p>
+
+    <div className="web-case-route-grid">
+      <article>
+        <span>USUARIO PRINCIPAL</span>
+        <h3>PERSONA QUE ENTRENA</h3>
+
+        <p>
+          Utiliza la aplicación para planificar y ejecutar sus
+          entrenamientos, consultar ejercicios y seguir su evolución.
+        </p>
+      </article>
+
+      <article>
+        <span>EXPANSIÓN FUTURA</span>
+        <h3>ENTRENADOR ONLINE</h3>
+
+        <p>
+          La experiencia específica del entrenador se planteó como una
+          segunda aplicación conectada al mismo ecosistema, pero quedó
+          fuera del alcance de esta primera etapa.
+        </p>
+      </article>
+    </div>
+
+    <blockquote className="web-case-conclusion">
+      Un mismo ecosistema con dos experiencias diferenciadas:
+      una para quien entrena y otra, proyectada a futuro, para quien
+      acompaña y diseña las rutinas.
+    </blockquote>
+  </article>
+)}
+
+{activeOcCaseSection === "architecture" && (
+  <article className="web-case-section">
+    <span className="web-case-section-number">
+      SECCIÓN 05 / 09
+    </span>
+
+    <h2>ARQUITECTURA</h2>
+
+    <p className="web-case-lead">
+      La arquitectura se organizó alrededor de las acciones necesarias
+      antes, durante y después de cada entrenamiento.
+    </p>
+
+    <p>
+      Las funcionalidades fueron agrupadas para que el usuario pudiera
+      acceder rápidamente a los cronómetros, comenzar una rutina,
+      consultar un movimiento o revisar su progreso sin abandonar la
+      experiencia principal.
+    </p>
+
+    <ul className="web-case-list">
+      <li>
+        Inicio y acceso a las funciones principales.
+      </li>
+
+      <li>
+        Selección y configuración de cronómetros.
+      </li>
+
+      <li>
+        Rutinas, precalentamientos y WODs preestablecidos.
+      </li>
+
+      <li>
+        Diccionario y guía visual de movimientos.
+      </li>
+
+      <li>
+        Registro y visualización del progreso semanal.
+      </li>
+
+      <li>
+        Comunicación y seguimiento con un entrenador online.
+      </li>
+    </ul>
+
+    <figure className="web-case-responsive-visual">
+      <button
+  type="button"
+  className="web-case-image-button"
+  onClick={() =>
+    setExpandedCaseImage(
+      "/projects/ux-ui/objetivos-claros/04-flujo-prototipo.png"
+    )
+  }
+  aria-label="Ampliar flujo del prototipo"
+>
+  <img
+    src="/projects/ux-ui/objetivos-claros/04-flujo-prototipo.png"
+    alt="Flujo de navegación del prototipo de Objetivos Claros"
+  />
+
+  <span>AMPLIAR ↗</span>
+</button>
+
+      <figcaption>
+        Mapa del prototipo funcional y conexiones entre pantallas.
+      </figcaption>
+    </figure>
+  </article>
+)}
+
+{activeOcCaseSection === "wireframes" && (
+  <article className="web-case-section">
+    <span className="web-case-section-number">
+      SECCIÓN 06 / 09
+    </span>
+
+    <h2>WIREFRAMES</h2>
+
+    <p className="web-case-lead">
+      Los wireframes permitieron definir la estructura de las pantallas
+      y validar los recorridos principales antes de avanzar con la
+      identidad visual.
+    </p>
+
+    <p>
+      En esta etapa se priorizaron la jerarquía de la información,
+      la ubicación de los controles y la comprensión de las acciones.
+      Las pantallas fueron evolucionando a partir de las pruebas de
+      usabilidad y de los problemas detectados durante las iteraciones.
+    </p>
+
+    <ul className="web-case-list">
+      <li>
+        Acceso rápido a las funciones principales.
+      </li>
+
+      <li>
+        Configuración comprensible de los cronómetros.
+      </li>
+
+      <li>
+        Navegación directa entre rutinas y movimientos.
+      </li>
+
+      <li>
+        Jerarquización de instrucciones durante el entrenamiento.
+      </li>
+
+      <li>
+        Visualización sencilla del progreso semanal.
+      </li>
+    </ul>
+
+    <figure className="web-case-responsive-visual">
+      <button
+  type="button"
+  className="web-case-image-button"
+  onClick={() =>
+    setExpandedCaseImage(
+      "/projects/ux-ui/objetivos-claros/05-wireframes.png"
+    )
+  }
+  aria-label="Ampliar wireframes de Objetivos Claros"
+>
+  <img
+    src="/projects/ux-ui/objetivos-claros/05-wireframes.png"
+    alt="Wireframes de la aplicación Objetivos Claros"
+  />
+
+  <span>AMPLIAR ↗</span>
+</button>
+
+      <figcaption>
+        Exploración y evolución de las pantallas antes del diseño visual final.
+      </figcaption>
+    </figure>
+  </article>
+)}
+
+{activeOcCaseSection === "ui" && (
+  <article className="web-case-section">
+    <span className="web-case-section-number">
+      SECCIÓN 07 / 09
+    </span>
+
+    <h2>DISEÑO UI</h2>
+
+    <p className="web-case-lead">
+      La identidad visual fue desarrollada para transmitir movimiento,
+      energía y claridad, manteniendo una interfaz funcional durante
+      situaciones de entrenamiento.
+    </p>
+
+    <p>
+      El sistema utiliza una paleta de alto contraste, componentes
+      reconocibles y jerarquías simples para facilitar la lectura de
+      tiempos, rutinas e instrucciones mientras el usuario se encuentra
+      en actividad.
+    </p>
+
+    <div className="web-case-tech">
+      <span>ALTO CONTRASTE</span>
+      <span>LECTURA RÁPIDA</span>
+      <span>COMPONENTES CONSISTENTES</span>
+      <span>IDENTIDAD DEPORTIVA</span>
+      <span>DISEÑO MOBILE</span>
+    </div>
+
+    <div className="oc-case-brand-grid">
+      <figure>
+        <button
+  type="button"
+  className="web-case-image-button"
+  onClick={() =>
+    setExpandedCaseImage(
+      "/projects/ux-ui/objetivos-claros/02-identidad-logo.png"
+    )
+  }
+  aria-label="Ampliar identidad visual de Objetivos Claros"
+>
+  <img
+    src="/projects/ux-ui/objetivos-claros/02-identidad-logo.png"
+    alt="Logotipo completo de Objetivos Claros"
+  />
+  <span>AMPLIAR ↗</span>
+</button>
+
+        <figcaption>
+          Logotipo principal e identidad de la aplicación.
+        </figcaption>
+      </figure>
+
+      <figure>
+        <button
+  type="button"
+  className="web-case-image-button"
+  onClick={() =>
+    setExpandedCaseImage(
+      "/projects/ux-ui/objetivos-claros/03-identidad-isotipo.png"
+    )
+  }
+  aria-label="Ampliar isotipo de Objetivos Claros"
+>
+  <img
+    src="/projects/ux-ui/objetivos-claros/03-identidad-isotipo.png"
+    alt="Isotipo de la aplicación Objetivos Claros"
+  />
+  <span>AMPLIAR ↗</span>
+</button>
+
+        <figcaption>
+          Isotipo preparado para el ícono y sus diferentes aplicaciones.
+        </figcaption>
+      </figure>
+    </div>
+  </article>
+)}
+
+{activeOcCaseSection === "prototype" && (
+  <article className="web-case-section">
+    <span className="web-case-section-number">
+      SECCIÓN 08 / 09
+    </span>
+
+    <h2>PROTOTIPO</h2>
+
+    <p className="web-case-lead">
+      El prototipo funcional permitió conectar las pantallas y simular
+      los recorridos principales antes de considerar una etapa de
+      desarrollo.
+    </p>
+
+    <p>
+      Se trabajaron las interacciones necesarias para comenzar un
+      entrenamiento, configurar los cronómetros, navegar entre rutinas,
+      consultar movimientos y acceder al seguimiento del usuario.
+    </p>
+
+    <ul className="web-case-list">
+      <li>
+        Navegación entre las funciones principales.
+      </li>
+
+      <li>
+        Configuración de distintos tipos de cronómetro.
+      </li>
+
+      <li>
+        Acceso a rutinas, WODs y guía de movimientos.
+      </li>
+
+      <li>
+        Visualización del progreso semanal.
+      </li>
+
+      <li>
+        Simulación de recorridos y validación de interacciones.
+      </li>
+    </ul>
+
+    <figure className="web-case-responsive-visual">
+      <button
+  type="button"
+  className="web-case-image-button"
+  onClick={() =>
+    setExpandedCaseImage(
+      "/projects/ux-ui/objetivos-claros/01-portada-objetivos-claros.png"
+    )
+  }
+  aria-label="Ampliar presentación del prototipo"
+>
+  <img
+    src="/projects/ux-ui/objetivos-claros/01-portada-objetivos-claros.png"
+    alt="Presentación del prototipo de Objetivos Claros"
+  />
+
+  <span>AMPLIAR ↗</span>
+</button>
+
+      <figcaption>
+        Propuesta visual y prototipo mobile de Objetivos Claros.
+      </figcaption>
+    </figure>
+
+    <a
+      className="oc-case-prototype-link"
+      href="https://www.figma.com/proto/Uru3E9ek6PnJjYqXLLnwgu/Prototipo-OC-con-sistema-de-grillas-Fonte%C3%B1ez-Pablo?page-id=0%3A1&node-id=338%3A9853&viewport=3397%2C4196%2C0.82&scaling=min-zoom&starting-point-node-id=46%3A5794"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      EXPLORAR PROTOTIPO FUNCIONAL <b>↗</b>
+    </a>
+  </article>
+)}
+
+{activeOcCaseSection === "result" && (
+  <article className="web-case-section">
+    <span className="web-case-section-number">
+      SECCIÓN 09 / 09
+    </span>
+
+    <h2>RESULTADO</h2>
+
+    <p className="web-case-lead">
+      El resultado fue un prototipo funcional que integra diferentes
+      herramientas de entrenamiento dentro de una experiencia móvil
+      consistente y organizada.
+    </p>
+
+    <p>
+      La propuesta permitió reunir cronómetros configurables, rutinas,
+      WODs, movimientos, progreso semanal y acompañamiento online en
+      una misma arquitectura de producto.
+    </p>
+
+    <ul className="web-case-list">
+      <li>
+        Definición de una propuesta de valor clara.
+      </li>
+
+      <li>
+        Organización de funcionalidades dentro de un único producto.
+      </li>
+
+      <li>
+        Construcción de recorridos y pantallas principales.
+      </li>
+
+      <li>
+        Iteración del diseño a partir de pruebas de usabilidad.
+      </li>
+
+      <li>
+        Desarrollo de una identidad y un sistema visual consistente.
+      </li>
+
+      <li>
+        Prototipo navegable preparado para comunicar el funcionamiento.
+      </li>
+    </ul>
+
+    <blockquote className="web-case-conclusion">
+  De una necesidad cotidiana de entrenamiento a un ecosistema
+  digital pensado para acompañar, organizar y medir cada sesión.
+</blockquote>
+    </article>
+  )}
+</div>
+</div>
+
+{expandedCaseImage && (
+  <div
+    className="web-case-lightbox"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Vista ampliada del proyecto"
+    onClick={() => setExpandedCaseImage(null)}
+  >
+    <button
+      type="button"
+      className="web-case-lightbox-close"
+      onClick={() => setExpandedCaseImage(null)}
+      aria-label="Cerrar imagen ampliada"
+    >
+      ×
+    </button>
+
+    <img
+      src={expandedCaseImage}
+      alt="Vista ampliada del caso de estudio Objetivos Claros"
+      onClick={(event) => event.stopPropagation()}
+    />
+  </div>
+)}
+</section>
+)}
 
           {screen === "web-case" && (
       <section className="scene web-case-scene">
