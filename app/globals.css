@@ -4683,3 +4683,15 @@ npx.cmd vite {
     margin-top: 295px;
   }
 }
+
+@media (min-width: 1001px) {
+  .menu-scene .main-menu {
+    transform: translateX(-8vw);
+  }
+}
+
+@media (max-width: 700px) {
+  .menu-scene .menu-bg {
+    object-position: 12% center !important;
+  }
+}

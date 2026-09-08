@@ -3,7 +3,12 @@
 import { FormEvent, MouseEvent, useEffect, useRef, useState } from "react";
 
 type Screen = "start" | "menu" | "about" | "skills" | "gallery" | "project" | "web" | "web-case" | "oc-case" | "video" | "contact";
-type Gallery = "Redes sociales" | "Branding e identidad visual" | "Banners web" | "Inteligencia artificial";
+type Gallery =
+  | "Redes sociales"
+  | "Branding e identidad visual"
+  | "Banners web"
+  | "Presentaciones"
+  | "Inteligencia artificial";
 type SkillSection =
   | "activities"
   | "abilities"
@@ -46,6 +51,7 @@ const menu: Array<{ label: string; screen?: Screen; gallery?: Gallery }> = [
   { label: "Redes sociales", screen: "gallery", gallery: "Redes sociales" },
   { label: "Branding e identidad visual", screen: "gallery", gallery: "Branding e identidad visual" },
   { label: "Banners web", screen: "gallery", gallery: "Banners web" },
+  { label: "Presentaciones", screen: "gallery", gallery: "Presentaciones" },
   { label: "Edición de video", screen: "video" },
   { label: "Diseño web y UX/UI", screen: "web" },
   { label: "Inteligencia artificial", screen: "gallery", gallery: "Inteligencia artificial" },
@@ -58,6 +64,13 @@ const galleryAssets: Record<Gallery, string[]> = {
   "/projects/manual-identidad-siempre-2026.png",
 ],
   "Banners web": ["/projects/banners-web/seleccion-banners.png"],
+  "Presentaciones": [
+  "/projects/presentaciones/01-niveles-prestadores.png",
+  "/projects/presentaciones/02-barrick-bienestar.png",
+  "/projects/presentaciones/03-estudio-mercado.png",
+  "/projects/presentaciones/04-hospitalizacion-domiciliaria.png",
+  "/projects/presentaciones/05-plan-inmediato.png",
+],
   "Inteligencia artificial": ["/projects/inteligencia-artificial/seleccion-ia.png"],
 };
 
@@ -65,6 +78,11 @@ const galleryCharacters: Record<Gallery, {src:string; className:string; alt:stri
   "Redes sociales": {src:"/characters/pablo-social.png",className:"character-gallery-social",alt:"Pablo como explorador con una barra"},
   "Branding e identidad visual": {src:"/characters/pablo-branding.png",className:"character-gallery-branding",alt:"Pablo como explorador con una escopeta"},
   "Banners web": {src:"/characters/pablo-banners.png",className:"character-gallery-banners",alt:"Pablo como explorador con hacha"},
+  "Presentaciones": {
+  src: "/characters/pablo-social.png",
+  className: "character-gallery-social",
+  alt: "Pablo como explorador presentando una selección de trabajos",
+},
   "Inteligencia artificial": {src:"/characters/pablo-ai.png",className:"character-gallery-ai",alt:"Pablo como explorador con un hacha al hombro"},
 };
 
@@ -128,6 +146,74 @@ const bannerProjects = [
     description: "En esta sección presento una selección de mis diseños de banners web, destacando la combinación de creatividad y funcionalidad. Cada pieza está diseñada pensando en la identidad de la marca y en captar la atención del público objetivo, logrando un equilibrio entre la estética y la comunicación efectiva.",
     sector: "DISEÑO DIGITAL", agency: "DIVERSAS MARCAS", year: "SELECCIÓN",
     images: ["/projects/banners-web/seleccion-banners.png"],
+  },
+];
+
+const presentationProjects = [
+  {
+    name: "NIVELES DE PRESTADORES",
+    logo: "",
+    description:
+      "Presentación institucional orientada a explicar la terminología médica y los distintos niveles de prestadores de manera clara, ordenada y visual.",
+    sector: "PRESENTACIÓN INSTITUCIONAL",
+    agency: "SIEMPRE SALUD Y BIENESTAR",
+    year: "2026",
+    images: [
+      "/projects/presentaciones/01-niveles-prestadores.png",
+    ],
+    url: "https://drive.google.com/file/d/1438oZ7G_wqi2t3zb5CMmY55DHrivtZxN/view?usp=drive_link",
+  },
+  {
+    name: "BARRICK BIENESTAR",
+    logo: "",
+    description:
+      "Propuesta comercial diseñada para presentar un servicio de bienestar corporativo con una comunicación profesional, clara y alineada con la identidad de la empresa.",
+    sector: "PROPUESTA COMERCIAL",
+    agency: "CARE ASSISTANCE",
+    year: "2026",
+    images: [
+      "/projects/presentaciones/02-barrick-bienestar.png",
+    ],
+    url: "https://drive.google.com/file/d/1WJFmUziUor71o1akIjbbb0uzQ3MfNUfH/view?usp=drive_link",
+  },
+  {
+    name: "ESTUDIO DE MERCADO",
+    logo: "",
+    description:
+      "Presentación estratégica que organiza información sobre competencia, precios y posicionamiento para facilitar su lectura, análisis y comunicación.",
+    sector: "PRESENTACIÓN ESTRATÉGICA",
+    agency: "SIEMPRE SALUD Y BIENESTAR",
+    year: "2026",
+    images: [
+      "/projects/presentaciones/03-estudio-mercado.png.png",
+    ],
+    url: "https://drive.google.com/file/d/1WKboOqiEFgTMPq8boI1Zmy_t-q3mSWW7/view?usp=drive_link",
+  },
+  {
+    name: "HOSPITALIZACIÓN DOMICILIARIA",
+    logo: "",
+    description:
+      "Presentación comercial desarrollada para comunicar un programa integral de internación domiciliaria y explicar sus principales características.",
+    sector: "PRESENTACIÓN COMERCIAL",
+    agency: "SIEMPRE SALUD Y BIENESTAR",
+    year: "2026",
+    images: [
+      "/projects/presentaciones/04-hospitalizacion-domiciliaria.png",
+    ],
+    url: "https://drive.google.com/file/d/1a151897fqbJsyvomsO8qmy7jrjPNiSQl/view?usp=drive_link",
+  },
+  {
+    name: "PLAN INMEDIATO",
+    logo: "",
+    description:
+      "Presentación de producto orientada a comunicar de manera directa una solución de cuidados profesionales para necesidades de salud urgentes.",
+    sector: "PRESENTACIÓN DE PRODUCTO",
+    agency: "SIEMPRE SALUD Y BIENESTAR",
+    year: "2026",
+    images: [
+      "/projects/presentaciones/05-plan-inmediato.png",
+    ],
+    url: "https://drive.google.com/file/d/1r-jrQk-u1rBeqbm6pAPdHazyGrNEVP-h/view?usp=drive_link",
   },
 ];
 
@@ -314,7 +400,16 @@ function SkillCategoryIcon({
   const sounds = useRef<Record<string, HTMLAudioElement>>({});
   const accessForm = useRef<HTMLFormElement>(null);
   const galleryCharacter = galleryCharacters[gallery];
-  const galleryProjects = gallery === "Redes sociales" ? socialProjects : gallery === "Branding e identidad visual" ? brandingProjects : gallery === "Banners web" ? bannerProjects : aiProjects;
+  const galleryProjects =
+    gallery === "Redes sociales"
+      ? socialProjects
+      : gallery === "Branding e identidad visual"
+        ? brandingProjects
+        : gallery === "Banners web"
+          ? bannerProjects
+          : gallery === "Presentaciones"
+            ? presentationProjects
+            : aiProjects;
   const currentProject = galleryProjects[selectedProject] || socialProjects[0];
   const slideTotal = currentProject.images.length;
   const accessMessage =
@@ -440,12 +535,18 @@ const emailAccessUrl =
   }
 }
 
-  function openGallery(next: Gallery) { setGallery(next); go("gallery"); }
-  function openProject(index: number) {
+  function openGallery(next: Gallery) {
+  setGallery(next);
+  go("gallery");
+}
+
+function openProject(index: number) {
   const externalUrl =
     gallery === "Branding e identidad visual"
       ? brandingProjects[index]?.externalUrl
-      : undefined;
+      : gallery === "Presentaciones"
+        ? presentationProjects[index]?.url
+        : undefined;
 
   if (externalUrl) {
     window.open(
