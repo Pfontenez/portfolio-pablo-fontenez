@@ -1364,6 +1364,200 @@ npx.cmd vite {
   font-size: 8px;
 }
 
+/* EXPERIENCIA INTERACTIVA */
+
+.experience-timeline {
+  max-height: 360px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.experience-timeline-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 0.8fr;
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 9px 6px 11px 0;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(226, 221, 208, 0.14);
+  font: inherit;
+  text-align: left;
+}
+
+.experience-timeline-item::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: -21px;
+  width: 9px;
+  height: 9px;
+  background: #6f7653;
+  border: 2px solid #090c0a;
+  border-radius: 50%;
+}
+
+.experience-timeline-item.has-details {
+  cursor: pointer;
+  transition:
+    padding-left 180ms ease,
+    background 180ms ease;
+}
+
+.experience-timeline-item.has-details:hover,
+.experience-timeline-item.has-details:focus-visible {
+  padding-left: 9px;
+  background: linear-gradient(
+    90deg,
+    rgba(111, 118, 83, 0.2),
+    transparent
+  );
+  outline: none;
+}
+
+.experience-timeline-item span {
+  color: #6f7653;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.experience-timeline-item b {
+  grid-column: 2;
+  grid-row: 1;
+  color: #e2ddd0;
+  font-size: 12px;
+  text-align: right;
+}
+
+.experience-timeline-item small {
+  grid-column: 1 / -1;
+  margin-top: 5px;
+  color: rgba(226, 221, 208, 0.58);
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+.experience-timeline-item i {
+  grid-column: 1 / -1;
+  margin-top: 7px;
+  color: rgba(226, 221, 208, 0.75);
+  font-size: 8px;
+  font-style: normal;
+  letter-spacing: 1.2px;
+}
+
+.experience-timeline-item:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.experience-record {
+  position: relative;
+  max-height: 470px;
+  padding-right: 14px;
+  overflow-y: auto;
+}
+
+.experience-record-back {
+  margin-bottom: 18px;
+  padding: 0;
+  color: #9ca577;
+  background: transparent;
+  border: 0;
+  font-size: 9px;
+  letter-spacing: 1.2px;
+  cursor: pointer;
+}
+
+.experience-record-back:hover,
+.experience-record-back:focus-visible {
+  color: #e2ddd0;
+  outline: none;
+}
+
+.experience-record-label {
+  display: block;
+  margin-bottom: 7px;
+  color: #6f7653;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.experience-record-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: -4px 0 22px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(226, 221, 208, 0.16);
+}
+
+.experience-record-meta span {
+  color: #6f7653;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+.experience-record-meta b {
+  color: rgba(226, 221, 208, 0.72);
+  font-size: 10px;
+  letter-spacing: 0.8px;
+}
+
+.experience-record section {
+  margin-bottom: 22px;
+}
+
+.experience-record h3 {
+  margin: 0 0 8px;
+  color: #9ca577;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+}
+
+.experience-record p,
+.experience-record li {
+  color: rgba(226, 221, 208, 0.72);
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.experience-record p {
+  margin: 0;
+}
+
+.experience-record ul {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding-left: 17px;
+}
+
+.experience-record li::marker {
+  color: #6f7653;
+}
+
+.experience-timeline,
+.experience-record {
+  scrollbar-width: thin;
+  scrollbar-color: #6f7653 rgba(226, 221, 208, 0.08);
+}
+
+.experience-timeline::-webkit-scrollbar,
+.experience-record::-webkit-scrollbar {
+  width: 4px;
+}
+
+.experience-timeline::-webkit-scrollbar-thumb,
+.experience-record::-webkit-scrollbar-thumb {
+  background: #6f7653;
+  border-radius: 10px;
+}
+
 /* ========================================
    CÍRCULO INTERACTIVO
 ======================================== */
@@ -4693,5 +4887,42 @@ npx.cmd vite {
 @media (max-width: 700px) {
   .menu-scene .menu-bg {
     object-position: 12% center !important;
+  }
+}
+
+@media (min-width: 1201px) {
+  .skills-scene .skill-detail-panel {
+    width: calc(100% + 180px);
+    margin-left: -180px;
+  }
+
+  .skills-scene .experience-timeline {
+    max-height: 340px;
+  }
+
+  .skills-scene .experience-timeline-item span {
+    font-size: 10px;
+  }
+
+  .skills-scene .experience-timeline-item b {
+    font-size: 13px;
+  }
+
+  .skills-scene .experience-timeline-item small {
+    font-size: 10px;
+  }
+
+  .skills-scene .experience-record {
+    max-height: 390px;
+  }
+
+  .skills-scene .experience-record h3 {
+    font-size: 10px;
+  }
+
+  .skills-scene .experience-record p,
+  .skills-scene .experience-record li {
+    font-size: 12px;
+    line-height: 1.65;
   }
 }

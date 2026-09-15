@@ -34,6 +34,13 @@ type OcCaseSection =
   | "ui"
   | "prototype"
   | "result";  
+  type ExperienceId =
+  | "siempre"
+  | "bb-group"
+  | "mond"
+  | "krab-e"
+  | "search"
+  | "estudio-33";
 
   const skillSections: Array<{
   id: SkillSection;
@@ -45,6 +52,139 @@ type OcCaseSection =
   { id: "experience", label: "EXPERIENCIA" },
   { id: "software", label: "SOFTWARE SKILLS" },
 ];
+
+const experienceTimeline: Array<{
+  id: ExperienceId;
+  dates: string;
+  company: string;
+  role: string;
+  hasDetails: boolean;
+}> = [
+  {
+    id: "siempre",
+    dates: "AGOSTO 2025 — AGOSTO 2026",
+    company: "SIEMPRE ARG",
+    role: "DISEÑADOR GRÁFICO Y DIGITAL",
+    hasDetails: true,
+  },
+  {
+    id: "mond",
+    dates: "FEBRERO 2025 — SEPTIEMBRE 2025",
+    company: "MOND",
+    role: "SUPERVISOR DE DISEÑO · FREELANCE",
+    hasDetails: true,
+  },
+  {
+    id: "bb-group",
+    dates: "FEBRERO 2025 — AGOSTO 2025",
+    company: "B+B GROUP",
+    role: "DISEÑADOR GRÁFICO",
+    hasDetails: true,
+  },
+  {
+    id: "krab-e",
+    dates: "JULIO 2021 — FEBRERO 2025",
+    company: "KRAB-E",
+    role: "DISEÑADOR GRÁFICO",
+    hasDetails: true,
+  },
+  {
+    id: "search",
+    dates: "FEBRERO 2020 — JULIO 2021",
+    company: "SEARCH",
+    role: "DISEÑADOR GRÁFICO",
+    hasDetails: false,
+  },
+  {
+    id: "estudio-33",
+    dates: "MAYO 2014 — AGOSTO 2017",
+    company: "ESTUDIO 33",
+    role: "DISEÑADOR GRÁFICO FREELANCE",
+    hasDetails: false,
+  },
+];
+
+const experienceDetails: Partial<
+  Record<
+    ExperienceId,
+    {
+      mission: string;
+      interventions: string[];
+      tools: string;
+      contribution?: string;
+    }
+  >
+> = {
+  siempre: {
+    mission:
+      "Desarrollar y mantener la comunicación visual del área de marketing, integrando diseño gráfico, contenido digital, piezas audiovisuales, presentaciones y actualización web.",
+    interventions: [
+      "Contenido gráfico y audiovisual para redes sociales, comunicación institucional y acciones comerciales.",
+      "Diseño y maquetación de presentaciones comerciales, documentos internos y materiales institucionales.",
+      "Edición de reels y videos corporativos.",
+      "Diseño, desarrollo y mantenimiento integral del sitio web.",
+      "Aplicación de criterios UX/UI, arquitectura de información, jerarquía visual y diseño responsive.",
+      "Adaptación de campañas a diferentes formatos y canales.",
+      "Trabajo conjunto con Marketing para transformar necesidades en soluciones visuales.",
+    ],
+    tools:
+      "Photoshop · Illustrator · Figma · Premiere Pro · CapCut · HTML · CSS · JavaScript · Inteligencia artificial",
+  },
+
+  "bb-group": {
+    mission:
+      "Desarrollar contenido visual para múltiples clientes de la agencia, transformando briefs, campañas y calendarios en piezas digitales consistentes con cada identidad de marca.",
+    interventions: [
+      "Diseño de contenido para redes sociales, campañas digitales, Meta Ads y Google Ads.",
+      "Adaptación de campañas con microinfluencers, reels y mailings.",
+      "Trabajo coordinado con Community Managers y responsables de cuentas.",
+      "Desarrollo de materiales para cuentas corporativas internacionales, entre ellas Dow.",
+      "Diseño de presentaciones, documentos y contenido corporativo para LinkedIn.",
+      "Adaptación de materiales proporcionados en español y portugués.",
+      "Aplicación de manuales de marca y control de consistencia visual.",
+    ],
+    tools:
+      "Photoshop · Illustrator · Figma · Social Media · Paid Media · Presentaciones · Reels · Mailings",
+  },
+
+  mond: {
+    mission:
+      "Supervisar y acompañar el trabajo de un equipo de dos diseñadoras, aportando criterio visual y lineamientos para mantener la calidad general de la producción.",
+    interventions: [
+      "Supervisión y revisión de las piezas desarrolladas por el equipo.",
+      "Reuniones semanales de seguimiento.",
+      "Devoluciones, correcciones y recomendaciones de diseño.",
+      "Control de composición, jerarquía y consistencia gráfica.",
+      "Detección de oportunidades de mejora antes de cada entrega.",
+      "Acompañamiento y asesoría creativa.",
+    ],
+    tools:
+      "Supervisión creativa · Dirección de arte · Control de calidad · Seguimiento de equipo",
+    contribution:
+      "Acompañamiento del equipo desde una mirada experimentada, fortaleciendo la calidad, la coherencia y el criterio aplicado a cada pieza.",
+  },
+
+  "krab-e": {
+    mission:
+      "Gestionar y producir contenido gráfico y audiovisual para múltiples cuentas, participando también en la creación de soluciones visuales para campañas digitales y tiendas de e-commerce.",
+    interventions: [
+      "Gestión simultánea de aproximadamente diez cuentas de redes sociales.",
+      "Diseño de piezas para Social Media, Meta Ads y Google Ads.",
+      "Campañas de alta demanda para Cyber Monday y Black Friday.",
+      "Edición de reels y contenido audiovisual.",
+      "Producción en tiempo real para Comunidad Cool y comunicación interna de McDonald’s.",
+      "Trabajo conjunto con Community Managers y equipos de marketing.",
+      "Contacto directo con clientes de Argentina, Chile y México.",
+      "Presentación de propuestas y argumentación de decisiones de diseño.",
+      "Creación y desarrollo del área Site Builder.",
+      "Diseño y estructura de tiendas de e-commerce en Mercado Shops.",
+      "Organización de productos, categorías, jerarquías y navegación.",
+      "Diseño de banners aplicando criterios de diseño web y UX/UI.",
+    ],
+    tools:
+      "Photoshop · Illustrator · Figma · Mercado Shops · Social Media · Paid Media · E-commerce · Reels · UX/UI",
+  },
+};
 
 const menu: Array<{ label: string; screen?: Screen; gallery?: Gallery }> = [
   { label: "Quién soy", screen: "about" },
@@ -378,6 +518,17 @@ function SkillCategoryIcon({
   const [screen, setScreen] = useState<Screen>("start");
   const [activeSkillSection, setActiveSkillSection] =
   useState<SkillSection | null>(null);
+  const [activeExperience, setActiveExperience] =
+  useState<ExperienceId | null>(null);
+  const selectedExperience = activeExperience
+  ? experienceTimeline.find(
+      (experience) => experience.id === activeExperience
+    )
+  : null;
+
+const selectedExperienceDetails = activeExperience
+  ? experienceDetails[activeExperience]
+  : null;
   const [activeWebCaseSection, setActiveWebCaseSection] =
   useState<WebCaseSection>("context");
   const [activeOcCaseSection, setActiveOcCaseSection] =
@@ -761,37 +912,104 @@ function openProject(index: number) {
         )}
 
         {activeSkillSection === "experience" && (
-          <div className="skill-detail-content">
-            <span className="skill-detail-number">04</span>
-            <h2>EXPERIENCIA</h2>
+  <div className="skill-detail-content">
+    <span className="skill-detail-number">04</span>
 
-            <div className="skill-detail-timeline">
-              <article>
-                <span>2025 — ACTUALIDAD</span>
-                <b>SIEMPRE ARG</b>
-                <small>DISEÑADOR GRÁFICO Y DIGITAL</small>
-              </article>
+    {!activeExperience && (
+      <>
+        <h2>EXPERIENCIA</h2>
 
-              <article>
-                <span>JULIO 2021 — FEBRERO 2025</span>
-                <b>KRAB-E</b>
-                <small>DISEÑADOR GRÁFICO</small>
-              </article>
+        <div className="skill-detail-timeline experience-timeline">
+          {experienceTimeline.map((experience) => (
+            <button
+              key={experience.id}
+              type="button"
+              className={`experience-timeline-item ${
+                experience.hasDetails ? "has-details" : ""
+              }`}
+              onClick={() =>
+                experience.hasDetails &&
+                setActiveExperience(experience.id)
+              }
+              disabled={!experience.hasDetails}
+              aria-label={
+                experience.hasDetails
+                  ? `Abrir experiencia en ${experience.company}`
+                  : `${experience.company}, información resumida`
+              }
+            >
+              <span>{experience.dates}</span>
+              <b>{experience.company}</b>
+              <small>{experience.role}</small>
 
-              <article>
-                <span>FEBRERO 2020 — JULIO 2021</span>
-                <b>SEARCH</b>
-                <small>DISEÑADOR GRÁFICO</small>
-              </article>
+              {experience.hasDetails && (
+                <i>ABRIR REGISTRO →</i>
+              )}
+            </button>
+          ))}
+        </div>
+      </>
+    )}
 
-              <article>
-                <span>MAYO 2014 — AGOSTO 2017</span>
-                <b>ESTUDIO 33</b>
-                <small>DISEÑADOR GRÁFICO FREELANCE</small>
-              </article>
-            </div>
+    {activeExperience &&
+      selectedExperience &&
+      selectedExperienceDetails && (
+        <div className="experience-record">
+          <button
+            type="button"
+            className="experience-record-back"
+            onClick={() => setActiveExperience(null)}
+          >
+            ← VOLVER AL HISTORIAL
+          </button>
+
+          <span className="experience-record-label">
+            REGISTRO LABORAL
+          </span>
+
+          <h2>{selectedExperience.company}</h2>
+
+          <div className="experience-record-meta">
+            <span>{selectedExperience.dates}</span>
+            <b>{selectedExperience.role}</b>
           </div>
-        )}
+
+          <section>
+            <h3>MISIÓN</h3>
+            <p>{selectedExperienceDetails.mission}</p>
+          </section>
+
+          <section>
+            <h3>INTERVENCIONES</h3>
+
+            <ul>
+              {selectedExperienceDetails.interventions.map(
+                (intervention) => (
+                  <li key={intervention}>
+                    {intervention}
+                  </li>
+                )
+              )}
+            </ul>
+          </section>
+
+          <section>
+            <h3>HERRAMIENTAS Y FORMATOS</h3>
+            <p>{selectedExperienceDetails.tools}</p>
+          </section>
+
+          {selectedExperienceDetails.contribution && (
+            <section>
+              <h3>APORTE</h3>
+              <p>
+                {selectedExperienceDetails.contribution}
+              </p>
+            </section>
+          )}
+        </div>
+      )}
+  </div>
+)}
 
         {activeSkillSection === "software" && (
           <div className="skill-detail-content">
