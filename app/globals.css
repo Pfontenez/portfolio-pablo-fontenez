@@ -4926,3 +4926,55 @@ npx.cmd vite {
     line-height: 1.65;
   }
 }
+
+/* PROGRESO DEL MENÚ */
+
+.menu-item-label {
+  position: relative;
+}
+
+.menu-unvisited-dot {
+  position: absolute !important;
+  top: 50% !important;
+  left: -16px !important;
+  z-index: 20 !important;
+  display: block !important;
+  width: 7px !important;
+  height: 7px !important;
+  background: #d7df55 !important;
+  border-radius: 50% !important;
+  transform: translateY(-50%) !important;
+  pointer-events: none;
+}
+
+/* COLOR FINAL DEL MENÚ */
+
+.menu-scene .main-menu button > .menu-item-label {
+  color: rgba(226, 221, 208, 0.48) !important;
+  font-weight: 400 !important;
+}
+
+.menu-scene .main-menu button:hover > .menu-item-label,
+.menu-scene .main-menu button:focus-visible > .menu-item-label {
+  color: #e2ddd0 !important;
+  font-weight: 600 !important;
+}
+
+/* AJUSTE DEL PANEL DE EDICIÓN DE VIDEO */
+
+@media (min-width: 1001px) {
+  .video-scene .video-access {
+    position: absolute !important;
+    top: 37% !important;
+    right: 4% !important;
+    bottom: auto !important;
+    left: 34% !important;
+    width: auto !important;
+  }
+
+  .video-scene .video-project {
+    width: 100% !important;
+    height: clamp(330px, 42vh, 390px) !important;
+    min-height: 0 !important;
+  }
+}

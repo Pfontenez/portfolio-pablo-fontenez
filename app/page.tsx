@@ -591,11 +591,13 @@ const projectContactWhatsappUrl =
     projectContactMessage
   )}`;
 
+const [visitedMenuItems, setVisitedMenuItems] = useState<string[]>([]);  
 
 const emailAccessUrl =
   `mailto:pabloezequielfontenez@gmail.com?subject=${encodeURIComponent(
     "Solicitud de acceso al portfolio"
   )}&body=${encodeURIComponent(accessMessage)}`;
+
 
   useEffect(() => {
     sounds.current = {
@@ -686,11 +688,20 @@ const emailAccessUrl =
   }
 }
 
-  function openGallery(next: Gallery) {
+function openGallery(next: Gallery) {
   setGallery(next);
   go("gallery");
 }
 
+function markMenuItemAsVisited(label: string) {
+  setVisitedMenuItems((currentItems) => {
+    if (currentItems.includes(label)) {
+      return currentItems;
+    }
+
+    return [...currentItems, label];
+  });
+}
 function openProject(index: number) {
   const externalUrl =
     gallery === "Branding e identidad visual"
@@ -760,7 +771,37 @@ function openProject(index: number) {
         <div className="menu-panel">
           <button className="menu-logo-button" onClick={() => go("start")} aria-label="Volver al inicio"><img className="menu-logo" src="/brand/logo-pablo-horizontal.png" alt="Pablo Fonteñez — Diseñador gráfico" /></button>
           <nav className="main-menu" aria-label="Menú principal">
-            {menu.map((item, index) => <button key={item.label} onClick={() => item.gallery ? openGallery(item.gallery) : go(item.screen || "menu")}><i>{String(index + 1).padStart(2,"0")}</i><span>{item.label}</span><b>›</b></button>)}
+            {menu.map((item, index) => {
+  const isVisited = visitedMenuItems.includes(item.label);
+
+  return (
+    <button
+      key={item.label}
+      className={isVisited ? "is-visited" : "is-unvisited"}
+      onClick={() => {
+        markMenuItemAsVisited(item.label);
+
+        item.gallery
+          ? openGallery(item.gallery)
+          : go(item.screen || "menu");
+      }}
+    >
+      <i>{String(index + 1).padStart(2, "0")}</i>
+
+      <span className="menu-item-label">
+  {!isVisited && (
+    <em
+      className="menu-unvisited-dot"
+      aria-hidden="true"
+    />
+  )}
+
+  {item.label}
+</span>
+      <b>›</b>
+    </button>
+  );
+})}
           </nav>
           <div className="menu-actions">
             <button onClick={() => go("contact")}>CONTACTO</button>
