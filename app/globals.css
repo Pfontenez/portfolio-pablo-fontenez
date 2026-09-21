@@ -4978,3 +4978,1037 @@ npx.cmd vite {
     min-height: 0 !important;
   }
 }
+
+/* BOTÓN CENTRAL · COMBINAR HABILIDADES */
+
+.skill-wheel-combine {
+  cursor: pointer;
+  outline: none;
+}
+
+.skill-wheel-combine .skill-wheel-center {
+  transition:
+    fill 0.25s ease,
+    stroke 0.25s ease,
+    filter 0.25s ease;
+}
+
+.skill-wheel-combine:hover .skill-wheel-center,
+.skill-wheel-combine:focus-visible .skill-wheel-center {
+  fill: rgba(111, 118, 83, 0.28);
+  stroke: #a8ad8c;
+  filter: drop-shadow(0 0 10px rgba(168, 173, 140, 0.28));
+}
+
+.skill-wheel-combine:hover .skill-wheel-center-small,
+.skill-wheel-combine:hover .skill-wheel-center-title,
+.skill-wheel-combine:focus-visible .skill-wheel-center-small,
+.skill-wheel-combine:focus-visible .skill-wheel-center-title {
+  fill: #ffffff;
+}
+
+.skill-wheel-combine-dot {
+  fill: #d7df55;
+  pointer-events: none;
+}
+
+.skill-wheel-combine {
+  pointer-events: all !important;
+}
+
+.skill-wheel-combine .skill-wheel-center {
+  pointer-events: all !important;
+  cursor: pointer;
+}
+
+.skill-wheel-combine text,
+.skill-wheel-combine-dot {
+  pointer-events: none !important;
+}
+
+/* =========================================================
+   COMBINAR HABILIDADES
+========================================================= */
+
+.craft-scene {
+  min-height: 100vh;
+  overflow: hidden;
+  color: #e2ddd0;
+  background: #080b09;
+}
+
+.craft-bg {
+  object-position: center;
+  filter: brightness(0.48) saturate(0.72);
+}
+
+.craft-shade {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(5, 8, 6, 0.08) 0%,
+      rgba(5, 8, 6, 0.18) 28%,
+      rgba(5, 8, 6, 0.76) 55%,
+      rgba(5, 8, 6, 0.92) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(5, 8, 6, 0.1) 0%,
+      rgba(5, 8, 6, 0.42) 100%
+    );
+}
+
+.character-craft {
+  z-index: 2;
+  right: auto;
+  bottom: 0;
+  left: 0;
+  width: min(34vw, 600px);
+  max-height: 92vh;
+  object-fit: contain;
+  object-position: left bottom;
+  filter: brightness(0.82) saturate(0.78);
+}
+
+.craft-panel {
+  position: absolute;
+  z-index: 4;
+  top: 8%;
+  right: 4%;
+  bottom: 5%;
+  display: flex;
+  flex-direction: column;
+  width: min(54vw, 990px);
+  padding: 24px 30px 20px;
+  overflow: hidden;
+  background: rgba(6, 10, 8, 0.88);
+  border: 1px solid rgba(226, 221, 208, 0.24);
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.44),
+    inset 0 0 45px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(9px);
+}
+
+.craft-header {
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(226, 221, 208, 0.18);
+}
+
+.craft-header > span,
+.craft-section-label {
+  color: #8b9270;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+}
+
+.craft-header h1 {
+  margin: 5px 0 4px;
+  color: #e2ddd0;
+  font-size: clamp(29px, 2.35vw, 45px);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.craft-header p {
+  margin: 0;
+  color: rgba(226, 221, 208, 0.58);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* RESULTADOS DESCUBIERTOS */
+
+.craft-profile-icons {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 9px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(226, 221, 208, 0.15);
+}
+
+.craft-profile-icons button {
+  display: grid;
+  min-width: 0;
+  height: 48px;
+  padding: 0;
+  place-items: center;
+  color: rgba(226, 221, 208, 0.18);
+  background: rgba(226, 221, 208, 0.025);
+  border: 1px solid rgba(226, 221, 208, 0.1);
+  cursor: default;
+}
+
+.craft-profile-icons button.is-discovered {
+  color: #e2ddd0;
+  border-color: rgba(226, 221, 208, 0.32);
+  cursor: pointer;
+}
+
+.craft-profile-icons button.is-active {
+  color: #ffffff;
+  background: rgba(111, 118, 83, 0.24);
+  border-color: #8b9270;
+  box-shadow: 0 0 15px rgba(111, 118, 83, 0.2);
+}
+
+.craft-profile-icons button.is-discovered:hover,
+.craft-profile-icons button.is-discovered:focus-visible {
+  color: #ffffff;
+  border-color: #a8ad8c;
+  outline: none;
+}
+
+/* INVENTARIO */
+
+.craft-inventory {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 9px;
+  padding: 15px 0;
+}
+
+.craft-inventory button {
+  display: flex;
+  min-width: 0;
+  min-height: 82px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  padding: 9px 5px;
+  color: rgba(226, 221, 208, 0.42);
+  background: rgba(226, 221, 208, 0.025);
+  border: 1px solid rgba(226, 221, 208, 0.14);
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.craft-inventory button span {
+  min-height: 21px;
+  font-size: 7px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0.6px;
+  text-align: center;
+}
+
+.craft-inventory button:hover,
+.craft-inventory button:focus-visible {
+  color: #e2ddd0;
+  border-color: rgba(168, 173, 140, 0.65);
+  outline: none;
+}
+
+.craft-inventory button.is-selected {
+  color: #ffffff;
+  background: rgba(111, 118, 83, 0.27);
+  border-color: #a8ad8c;
+  box-shadow:
+    inset 0 0 22px rgba(111, 118, 83, 0.13),
+    0 0 12px rgba(111, 118, 83, 0.12);
+}
+
+/* ÁREA DE COMBINACIÓN */
+
+.craft-work-area {
+  display: grid;
+  flex: 1;
+  min-height: 0;
+  grid-template-columns: 1.05fr 0.95fr;
+  border-top: 1px solid rgba(226, 221, 208, 0.15);
+  border-bottom: 1px solid rgba(226, 221, 208, 0.15);
+}
+
+.craft-selected-area,
+.craft-result {
+  min-width: 0;
+  padding: 17px 18px;
+}
+
+.craft-selected-area {
+  padding-left: 0;
+  border-right: 1px solid rgba(226, 221, 208, 0.15);
+}
+
+.craft-result {
+  display: flex;
+  padding-right: 0;
+  flex-direction: column;
+}
+
+.craft-slots {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  margin-top: 15px;
+}
+
+.craft-slot {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 104px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 9px;
+  padding: 13px;
+  color: #e2ddd0;
+  background: rgba(111, 118, 83, 0.16);
+  border: 1px solid rgba(168, 173, 140, 0.55);
+  cursor: pointer;
+}
+
+.craft-slot span {
+  font-size: 8px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0.8px;
+  text-align: center;
+}
+
+.craft-slot b {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  color: rgba(226, 221, 208, 0.42);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.craft-slot.is-empty {
+  color: rgba(226, 221, 208, 0.24);
+  background: rgba(226, 221, 208, 0.018);
+  border: 1px dashed rgba(226, 221, 208, 0.2);
+  cursor: default;
+}
+
+.craft-plus {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: rgba(226, 221, 208, 0.52);
+  font-size: 25px;
+  font-weight: 300;
+  transform: translate(-50%, -50%);
+}
+
+.craft-result-content,
+.craft-result-empty {
+  display: flex;
+  flex: 1;
+  min-height: 120px;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  padding-left: 4px;
+}
+
+.craft-result-content > svg {
+  margin-bottom: 9px;
+  color: #a8ad8c;
+}
+
+.craft-result-content > span,
+.craft-result-empty > span {
+  color: #8b9270;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+}
+
+.craft-result-content h2 {
+  margin: 5px 0 7px;
+  color: #e2ddd0;
+  font-size: clamp(17px, 1.35vw, 25px);
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+.craft-result-content p,
+.craft-result-empty p {
+  max-width: 390px;
+  margin: 0;
+  color: rgba(226, 221, 208, 0.56);
+  font-size: 9px;
+  line-height: 1.55;
+}
+
+/* PIE DEL PANEL */
+
+.craft-footer {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+  padding-top: 16px;
+}
+
+.craft-footer > span {
+  color: rgba(226, 221, 208, 0.46);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+}
+
+.craft-footer > span b {
+  margin-left: 5px;
+  color: #a8ad8c;
+}
+
+.craft-combine-button,
+.craft-back-button {
+  min-height: 38px;
+  padding: 0 18px;
+  color: #e2ddd0;
+  background: transparent;
+  border: 1px solid rgba(226, 221, 208, 0.32);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.craft-combine-button {
+  color: #090c0a;
+  background: #8b9270;
+  border-color: #a8ad8c;
+}
+
+.craft-combine-button:hover:not(:disabled),
+.craft-combine-button:focus-visible:not(:disabled) {
+  background: #a8ad8c;
+  box-shadow: 0 0 17px rgba(139, 146, 112, 0.3);
+  outline: none;
+}
+
+.craft-combine-button:disabled {
+  color: rgba(226, 221, 208, 0.25);
+  background: rgba(226, 221, 208, 0.05);
+  border-color: rgba(226, 221, 208, 0.12);
+  cursor: not-allowed;
+}
+
+.craft-back-button:hover,
+.craft-back-button:focus-visible {
+  color: #ffffff;
+  border-color: #a8ad8c;
+  outline: none;
+}
+
+/* NOTEBOOKS Y PANTALLAS BAJAS */
+
+@media (max-height: 780px) and (min-width: 901px) {
+  .craft-panel {
+    top: 6%;
+    bottom: 3%;
+    padding: 18px 24px 15px;
+  }
+
+  .craft-header {
+    padding-bottom: 10px;
+  }
+
+  .craft-profile-icons {
+    padding: 10px 0;
+  }
+
+  .craft-profile-icons button {
+    height: 41px;
+  }
+
+  .craft-inventory {
+    padding: 10px 0;
+  }
+
+  .craft-inventory button {
+    min-height: 67px;
+  }
+
+  .craft-slot {
+    min-height: 82px;
+  }
+
+  .craft-footer {
+    padding-top: 11px;
+  }
+}
+
+/* TABLET Y MOBILE */
+
+@media (max-width: 900px) {
+  .craft-scene {
+    min-height: 100svh;
+    overflow-y: auto;
+  }
+
+  .craft-bg {
+    position: fixed;
+    object-position: 35% center;
+  }
+
+  .craft-shade {
+    position: fixed;
+    background: rgba(5, 8, 6, 0.73);
+  }
+
+  .character-craft {
+    position: fixed;
+    width: 72vw;
+    max-height: 75svh;
+    opacity: 0.34;
+  }
+
+  .craft-panel {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    width: calc(100% - 32px);
+    margin: 105px 16px 30px;
+    padding: 22px 18px;
+    overflow: visible;
+  }
+
+  .craft-profile-icons,
+  .craft-inventory {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .craft-work-area {
+    grid-template-columns: 1fr;
+  }
+
+  .craft-selected-area {
+    padding-right: 0;
+    border-right: 0;
+    border-bottom: 1px solid rgba(226, 221, 208, 0.15);
+  }
+
+  .craft-result {
+    padding: 18px 0;
+  }
+
+  .craft-result-content,
+  .craft-result-empty {
+    min-height: 145px;
+  }
+}
+
+@media (max-width: 520px) {
+  .craft-panel {
+    width: calc(100% - 20px);
+    margin: 92px 10px 20px;
+    padding: 20px 14px;
+  }
+
+  .craft-header h1 {
+    font-size: 30px;
+  }
+
+  .craft-profile-icons {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .craft-profile-icons button {
+    height: 46px;
+  }
+
+  .craft-inventory {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .craft-inventory button {
+    min-height: 74px;
+  }
+
+  .craft-slots {
+    gap: 34px;
+  }
+
+  .craft-slot {
+    min-height: 95px;
+    padding: 10px 5px;
+  }
+
+  .craft-footer {
+    grid-template-columns: 1fr;
+  }
+
+  .craft-footer > span {
+    margin-bottom: 4px;
+    text-align: center;
+  }
+
+  .craft-combine-button,
+  .craft-back-button {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   AJUSTE FINAL · COMBINAR HABILIDADES
+========================================================= */
+
+.craft-panel {
+  top: 6.5%;
+  right: 3.5%;
+  bottom: 5%;
+  width: min(56vw, 1060px);
+  padding: 28px 34px 22px;
+}
+
+.craft-header > span,
+.craft-section-label {
+  font-size: 11px;
+  letter-spacing: 3px;
+}
+
+.craft-header h1 {
+  margin: 8px 0 6px;
+  font-size: clamp(36px, 2.6vw, 50px);
+}
+
+.craft-header p {
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+/* SIETE PERFILES SUPERIORES */
+
+.craft-profile-icons {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 11px;
+  padding: 14px 0;
+}
+
+.craft-profile-icons button {
+  height: 64px;
+}
+
+.craft-profile-icons button svg {
+  width: 34px;
+  height: 34px;
+}
+
+/* ÁREA PRINCIPAL */
+
+.craft-main-area {
+  display: grid;
+  flex: 1;
+  min-height: 0;
+  grid-template-columns: 1.1fr 0.9fr;
+  border-top: 1px solid rgba(226, 221, 208, 0.15);
+  border-bottom: 1px solid rgba(226, 221, 208, 0.15);
+}
+
+.craft-skills-area {
+  min-width: 0;
+  padding: 18px 24px 18px 0;
+  border-right: 1px solid rgba(226, 221, 208, 0.15);
+}
+
+/* INVENTARIO 3 + 3 + 1 */
+
+.craft-inventory {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 11px;
+  padding: 15px 0 0;
+}
+
+.craft-skill-card {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 86px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 9px;
+  padding: 10px 8px;
+  overflow: hidden;
+  color: rgba(226, 221, 208, 0.35);
+  background: rgba(226, 221, 208, 0.02);
+  border: 1px solid rgba(226, 221, 208, 0.14);
+  transition:
+    color 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.craft-skill-card svg,
+.craft-skill-card span {
+  position: relative;
+  z-index: 2;
+}
+
+.craft-skill-card span {
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0.7px;
+  text-align: center;
+}
+
+.craft-skill-card.is-selected {
+  color: #ffffff;
+  background: rgba(111, 118, 83, 0.16);
+  border-color: #a8ad8c;
+}
+
+/* LLENADO DURANTE LA COMBINACIÓN */
+
+.craft-skill-card.is-crafting::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(139, 146, 112, 0.28),
+      rgba(168, 173, 140, 0.62)
+    );
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: craft-fill 1.4s linear forwards;
+}
+
+.craft-skill-card.is-crafting {
+  box-shadow:
+    0 0 18px rgba(139, 146, 112, 0.25),
+    inset 0 0 20px rgba(168, 173, 140, 0.15);
+}
+
+@keyframes craft-fill {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* RESULTADO */
+
+.craft-result {
+  min-width: 0;
+  padding: 18px 0 18px 24px;
+}
+
+.craft-result-content,
+.craft-result-empty {
+  min-height: 230px;
+  padding: 20px 8px 20px 0;
+}
+
+.craft-result-content > svg {
+  width: 58px;
+  height: 58px;
+  margin-bottom: 14px;
+}
+
+.craft-result-content > span,
+.craft-result-empty > span {
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.craft-result-content h2 {
+  max-width: 420px;
+  margin: 8px 0 12px;
+  font-size: clamp(24px, 1.65vw, 32px);
+  line-height: 1.05;
+}
+
+.craft-result-content p,
+.craft-result-empty p {
+  max-width: 390px;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+/* CONTADOR Y BOTONES */
+
+.craft-footer {
+  padding-top: 17px;
+}
+
+.craft-footer > span {
+  font-size: 10px;
+  letter-spacing: 1.8px;
+}
+
+.craft-combine-button,
+.craft-back-button {
+  min-height: 43px;
+  padding: 0 22px;
+  font-size: 10px;
+}
+
+/* PANTALLAS BAJAS */
+
+@media (max-height: 820px) and (min-width: 901px) {
+  .craft-panel {
+    top: 5%;
+    bottom: 3%;
+    padding: 20px 26px 16px;
+  }
+
+  .craft-header h1 {
+    font-size: 36px;
+  }
+
+  .craft-header p {
+    font-size: 11px;
+  }
+
+  .craft-profile-icons {
+    gap: 8px;
+    padding: 10px 0;
+  }
+
+  .craft-profile-icons button {
+    height: 48px;
+  }
+
+  .craft-profile-icons button svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .craft-skills-area,
+  .craft-result {
+    padding-top: 13px;
+    padding-bottom: 13px;
+  }
+
+  .craft-inventory {
+    gap: 8px;
+    padding-top: 11px;
+  }
+
+  .craft-skill-card {
+    min-height: 68px;
+  }
+
+  .craft-skill-card svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .craft-result-content,
+  .craft-result-empty {
+    min-height: 190px;
+  }
+
+  .craft-footer {
+    padding-top: 11px;
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 900px) {
+  .craft-panel {
+    width: calc(100% - 32px);
+  }
+
+  .craft-main-area {
+    grid-template-columns: 1fr;
+  }
+
+  .craft-skills-area {
+    padding-right: 0;
+    border-right: 0;
+    border-bottom: 1px solid rgba(226, 221, 208, 0.15);
+  }
+
+  .craft-result {
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .craft-header h1 {
+    font-size: 29px;
+  }
+
+  .craft-header p {
+    font-size: 12px;
+  }
+
+  .craft-profile-icons {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .craft-inventory {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .craft-skill-card {
+    min-height: 82px;
+  }
+
+  .craft-result-content h2 {
+    font-size: 25px;
+  }
+
+  .craft-result-content p,
+  .craft-result-empty p {
+    font-size: 13px;
+  }
+}
+
+/* AJUSTE DE ESCALA Y POSICIÓN DEL CRAFTEO */
+
+.craft-panel {
+  top: 105px;
+  right: 3.5%;
+  bottom: 38px;
+  width: min(53vw, 1000px);
+  padding: 26px 32px 20px;
+}
+
+.craft-header > span,
+.craft-section-label {
+  font-size: 12px;
+  letter-spacing: 2.8px;
+}
+
+.craft-header h1 {
+  font-size: clamp(38px, 2.5vw, 48px);
+}
+
+.craft-header p {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.craft-skill-card span {
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.craft-result-content > span,
+.craft-result-empty > span {
+  font-size: 11px;
+}
+
+.craft-result-content h2,
+.craft-result-empty h2 {
+  margin: 9px 0 13px;
+  font-size: clamp(26px, 1.7vw, 34px);
+  line-height: 1.08;
+}
+
+.craft-result-content p,
+.craft-result-empty p {
+  max-width: 370px;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.craft-footer {
+  grid-template-columns: 1fr auto;
+}
+
+.craft-footer > span {
+  font-size: 11px;
+}
+
+.craft-combine-button {
+  min-height: 44px;
+  padding: 0 28px;
+  font-size: 11px;
+}
+
+/* Evita que el ajuste para pantallas bajas vuelva a subir el panel */
+
+@media (max-height: 820px) and (min-width: 901px) {
+  .craft-panel {
+    top: 90px;
+    right: 3.5%;
+    bottom: 25px;
+    width: min(53vw, 1000px);
+  }
+
+  .craft-header > span,
+  .craft-section-label {
+    font-size: 10px;
+  }
+
+  .craft-header p {
+    font-size: 12px;
+  }
+
+  .craft-skill-card span {
+    font-size: 9px;
+  }
+
+  .craft-result-content p,
+  .craft-result-empty p {
+    font-size: 13px;
+  }
+}
+
+/* VIDEO DE FONDO · COMBINAR HABILIDADES */
+
+.craft-bg-video {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  pointer-events: none;
+}
+
+.craft-shade {
+  z-index: 1;
+}
+
+.character-craft {
+  z-index: 2;
+}
+
+.craft-panel {
+  z-index: 4;
+}
+
+@media (max-width: 900px) {
+  .craft-bg-video {
+    position: fixed;
+    object-position: 40% center;
+  }
+}
+
+/* VIDEO DE CRAFTEO SIN OSCURECIMIENTO */
+
+.craft-bg-video {
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+.craft-shade {
+  background: linear-gradient(
+    90deg,
+    rgba(5, 8, 6, 0.02) 0%,
+    rgba(5, 8, 6, 0.04) 42%,
+    rgba(5, 8, 6, 0.12) 100%
+  ) !important;
+}

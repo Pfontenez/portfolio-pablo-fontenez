@@ -2,7 +2,36 @@
 
 import { FormEvent, MouseEvent, useEffect, useRef, useState } from "react";
 
-type Screen = "start" | "menu" | "about" | "skills" | "gallery" | "project" | "web" | "web-case" | "oc-case" | "video" | "contact";
+import {
+  Palette,
+  Megaphone,
+  MousePointerClick,
+  CodeXml,
+  Clapperboard,
+  Network,
+  Sparkles,
+  MonitorSmartphone,
+  PanelsTopLeft,
+  LaptopMinimalCheck,
+  Layers,
+  Film,
+  Presentation,
+  WandSparkles,
+} from "lucide-react";
+
+type Screen =
+  | "start"
+  | "menu"
+  | "about"
+  | "skills"
+  | "combine"
+  | "gallery"
+  | "project"
+  | "web"
+  | "web-case"
+  | "oc-case"
+  | "video"
+  | "contact";
 type Gallery =
   | "Redes sociales"
   | "Branding e identidad visual"
@@ -41,6 +70,132 @@ type OcCaseSection =
   | "krab-e"
   | "search"
   | "estudio-33";
+  type CraftSkillId =
+  | "graphic-design"
+  | "digital-communication"
+  | "ux-ui"
+  | "web-development"
+  | "video-editing"
+  | "information-architecture"
+  | "artificial-intelligence";
+
+type CraftProfileId =
+  | "graphic-digital"
+  | "interface-designer"
+  | "web-ux-ui"
+  | "multimedia-designer"
+  | "audiovisual-creator"
+  | "presentation-designer"
+  | "ai-design";
+
+const craftSkills: Array<{
+  id: CraftSkillId;
+  label: string;
+  icon: typeof Palette;
+}> = [
+  {
+    id: "graphic-design",
+    label: "DISEÑO GRÁFICO",
+    icon: Palette,
+  },
+  {
+    id: "digital-communication",
+    label: "COMUNICACIÓN DIGITAL",
+    icon: Megaphone,
+  },
+  {
+    id: "ux-ui",
+    label: "UX/UI",
+    icon: MousePointerClick,
+  },
+  {
+    id: "web-development",
+    label: "DESARROLLO WEB",
+    icon: CodeXml,
+  },
+  {
+    id: "video-editing",
+    label: "EDICIÓN AUDIOVISUAL",
+    icon: Clapperboard,
+  },
+  {
+    id: "information-architecture",
+    label: "ARQUITECTURA DE INFORMACIÓN",
+    icon: Network,
+  },
+  {
+    id: "artificial-intelligence",
+    label: "INTELIGENCIA ARTIFICIAL",
+    icon: Sparkles,
+  },
+];
+
+
+
+const craftProfiles: Array<{
+  id: CraftProfileId;
+  title: string;
+  description: string;
+  ingredients: [CraftSkillId, CraftSkillId];
+  icon: typeof Palette;
+}> = [
+  {
+    id: "graphic-digital",
+    title: "DISEÑADOR GRÁFICO Y DIGITAL",
+    description:
+      "Desarrollo identidades, campañas y piezas visuales adaptadas a diferentes medios y canales digitales.",
+    ingredients: ["graphic-design", "digital-communication"],
+    icon: MonitorSmartphone,
+  },
+  {
+    id: "interface-designer",
+    title: "DISEÑADOR DE INTERFACES",
+    description:
+      "Combino fundamentos de diseño gráfico con usabilidad, jerarquía visual y construcción de interfaces.",
+    ingredients: ["graphic-design", "ux-ui"],
+    icon: PanelsTopLeft,
+  },
+  {
+    id: "web-ux-ui",
+    title: "DISEÑADOR WEB UX/UI",
+    description:
+      "Diseño experiencias digitales aplicando criterios UX/UI, diseño responsive y desarrollo web.",
+    ingredients: ["ux-ui", "web-development"],
+    icon: LaptopMinimalCheck,
+  },
+  {
+    id: "multimedia-designer",
+    title: "DISEÑADOR MULTIMEDIA",
+    description:
+      "Integro diseño gráfico, imagen y movimiento para desarrollar piezas visuales y audiovisuales.",
+    ingredients: ["graphic-design", "video-editing"],
+    icon: Layers,
+  },
+  {
+    id: "audiovisual-creator",
+    title: "CREADOR DE CONTENIDO AUDIOVISUAL",
+    description:
+      "Transformo conceptos de comunicación en reels, videos institucionales y contenido para redes.",
+    ingredients: ["digital-communication", "video-editing"],
+    icon: Film,
+  },
+  {
+    id: "presentation-designer",
+    title: "DISEÑADOR DE PRESENTACIONES",
+    description:
+      "Organizo información compleja y la convierto en presentaciones claras, visuales y persuasivas.",
+    ingredients: ["graphic-design", "information-architecture"],
+    icon: Presentation,
+  },
+  {
+    id: "ai-design",
+    title: "IA APLICADA AL DISEÑO",
+    description:
+      "Utilizo inteligencia artificial como herramienta para ampliar la exploración, producción y comunicación visual.",
+    ingredients: ["graphic-design", "artificial-intelligence"],
+    icon: WandSparkles,
+  },
+];
 
   const skillSections: Array<{
   id: SkillSection;
@@ -516,6 +671,16 @@ function SkillCategoryIcon({
   );
 }
   const [screen, setScreen] = useState<Screen>("start");
+  const [selectedCraftSkills, setSelectedCraftSkills] =
+  useState<CraftSkillId[]>([]);
+  const [discoveredCraftProfiles, setDiscoveredCraftProfiles] =
+  useState<CraftProfileId[]>([]);
+  const [activeCraftProfile, setActiveCraftProfile] =
+  useState<CraftProfileId | null>(null);
+  const [craftVisited, setCraftVisited] = useState(false);
+  const [craftCombinationAttempted, setCraftCombinationAttempted] =
+  useState(false);
+  const [isCrafting, setIsCrafting] = useState(false);
   const [activeSkillSection, setActiveSkillSection] =
   useState<SkillSection | null>(null);
   const [activeExperience, setActiveExperience] =
@@ -526,8 +691,13 @@ function SkillCategoryIcon({
     )
   : null;
 
-const selectedExperienceDetails = activeExperience
+  const selectedExperienceDetails = activeExperience
   ? experienceDetails[activeExperience]
+  : null;
+  const currentCraftProfile = activeCraftProfile
+  ? craftProfiles.find(
+      (profile) => profile.id === activeCraftProfile
+    ) || null
   : null;
   const [activeWebCaseSection, setActiveWebCaseSection] =
   useState<WebCaseSection>("context");
@@ -688,6 +858,64 @@ const emailAccessUrl =
   }
 }
 
+function openCraftMode() {
+  setCraftVisited(true);
+  go("combine");
+}
+
+function toggleCraftSkill(skillId: CraftSkillId) {
+  setCraftCombinationAttempted(false);
+  setActiveCraftProfile(null);
+
+  setSelectedCraftSkills((currentSkills) => {
+    if (currentSkills.includes(skillId)) {
+      return currentSkills.filter((id) => id !== skillId);
+    }
+
+    if (currentSkills.length === 2) {
+      return [currentSkills[1], skillId];
+    }
+
+    return [...currentSkills, skillId];
+  });
+}
+
+function combineCraftSkills() {
+  if (!activeCraftProfile || isCrafting) return;
+
+  const selectedProfile = craftProfiles.find(
+    profile => profile.id === activeCraftProfile
+  );
+
+  if (!selectedProfile) return;
+
+  const craftAudio = new Audio("/audio/crafting.mp3");
+
+  craftAudio.volume = 0.7;
+  craftAudio.currentTime = 0;
+
+  craftAudio.play().catch(error => {
+    console.error("No se pudo reproducir el sonido:", error);
+  });
+
+  setIsCrafting(true);
+  setCraftCombinationAttempted(false);
+
+  window.setTimeout(() => {
+    craftAudio.pause();
+    craftAudio.currentTime = 0;
+
+    setDiscoveredCraftProfiles(currentProfiles =>
+      currentProfiles.includes(selectedProfile.id)
+        ? currentProfiles
+        : [...currentProfiles, selectedProfile.id]
+    );
+
+    setCraftCombinationAttempted(true);
+    setIsCrafting(false);
+  }, 1400);
+}
+
 function openGallery(next: Gallery) {
   setGallery(next);
   go("gallery");
@@ -813,7 +1041,7 @@ function openProject(index: number) {
 
       {screen === "about" && <section className="scene about-scene">
         <img className="scene-bg about-bg" src="/backgrounds/pergola.webp" alt="Pérgola abandonada recuperada por la naturaleza" />
-        <img className="scene-character character-about" src="/characters/pablo-action.png" alt="Pablo como explorador en pose de acción" />
+       
         <div className="right-shade" />
         <Back onClick={() => go("menu")} />
         <div className="about-copy"><span className="screen-label">PERFIL / PLAYER 01</span><h1>QUIÉN SOY</h1><p>Soy Pablo Fonteñez, diseñador gráfico con más de 15 años de experiencia. Trabajé en identidad visual, comunicación institucional y diseño de piezas para distintos medios, buscando siempre que cada proyecto sea claro, atractivo y funcional.</p><p>Durante el último año amplié mi trabajo hacia la comunicación digital y audiovisual: contenido para redes, campañas, presentaciones, páginas web, reels y videos institucionales. Me gusta involucrarme en todo el proceso, desde la idea y la organización del contenido hasta el diseño, la edición y su adaptación a cada formato.</p><p>Hoy mi perfil combina diseño gráfico, contenido digital, edición audiovisual, desarrollo web e inteligencia artificial para conectar la idea, la imagen, el movimiento y la experiencia final.</p><button className="about-skills-link" onClick={() => go("skills")}>INVENTARIO DE HABILIDADES <span>→</span></button></div>
@@ -1180,38 +1408,53 @@ function openProject(index: number) {
       );
     })}
 
+    <g
+  className="skill-wheel-combine"
+  role="button"
+  tabIndex={0}
+  aria-label="Abrir combinación de habilidades"
+  onClick={openCraftMode}
+  onKeyDown={event => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openCraftMode();
+    }
+  }}
+>
+  <circle
+    className="skill-wheel-center"
+    cx="200"
+    cy="200"
+    r="69"
+  />
+
+  {!craftVisited && (
     <circle
-      className="skill-wheel-center"
-      cx="200"
-      cy="200"
-      r="69"
+      className="skill-wheel-combine-dot"
+      cx="247"
+      cy="158"
+      r="4"
     />
+  )}
 
-    <text
-      className="skill-wheel-center-small"
-      x="200"
-      y="187"
-      textAnchor="middle"
-    >
-      {hoveredSkillSection || activeSkillSection
-        ? "CATEGORÍA"
-        : "INVENTARIO"}
-    </text>
+  <text
+    className="skill-wheel-center-small"
+    x="200"
+    y="187"
+    textAnchor="middle"
+  >
+    MODO INTERACTIVO
+  </text>
 
-    <text
-      className="skill-wheel-center-title"
-      x="200"
-      y="211"
-      textAnchor="middle"
-    >
-      {skillSections
-        .find(
-          item =>
-            item.id ===
-            (hoveredSkillSection || activeSkillSection)
-        )
-        ?.label.split(" ")[0] || "SKILLS"}
-    </text>
+  <text
+    className="skill-wheel-center-title"
+    x="200"
+    y="211"
+    textAnchor="middle"
+  >
+    COMBINAR
+  </text>
+</g>
   </svg>
 </div>
 
@@ -2689,6 +2932,205 @@ function openProject(index: number) {
           {access ? "VER VIDEOS ↗" : "NIVEL 2 · INGRESAR CÓDIGO"}
         </b>
       </button>
+    </div>
+  </section>
+)}
+
+{screen === "combine" && (
+  <section className="scene craft-scene">
+    <video
+  className="scene-bg craft-bg craft-bg-video"
+  autoPlay
+  loop
+  muted
+  playsInline
+  preload="auto"
+  aria-hidden="true"
+>
+  <source
+    src="/backgrounds/crafting-bg.mp4"
+    type="video/mp4"
+  />
+</video>
+
+    
+
+    <div className="craft-shade" />
+
+    <Back
+      onClick={() => go("skills")}
+      label="VOLVER A SKILLS"
+    />
+
+    <div className="craft-panel">
+      <header className="craft-header">
+        <span>INVENTARIO / HABILIDADES</span>
+        <h1>COMBINAR HABILIDADES</h1>
+        <p>
+         Seleccioná un perfil y combiná las habilidades necesarias para desbloquearlo.
+        </p>
+      </header>
+
+      <div
+        className="craft-profile-icons"
+        aria-label="Perfiles profesionales descubiertos"
+      >
+        {craftProfiles.map(profile => {
+          const ProfileIcon = profile.icon;
+          const isDiscovered =
+            discoveredCraftProfiles.includes(profile.id);
+          const isActive =
+            activeCraftProfile === profile.id;
+
+          return (
+            <button
+              key={profile.id}
+              type="button"
+              className={`${isDiscovered ? "is-discovered" : ""} ${
+                isActive ? "is-active" : ""
+              }`}
+              onClick={() => {
+                setActiveCraftProfile(profile.id);
+                setSelectedCraftSkills([...profile.ingredients]);
+                setCraftCombinationAttempted(false);
+              }}
+              aria-label={
+                isDiscovered
+                  ? profile.title
+                  : "Perfil todavía no descubierto"
+              }
+            >
+              <ProfileIcon
+                size={28}
+                strokeWidth={1.6}
+                aria-hidden="true"
+              />
+            </button>
+          );
+        })}
+      </div>
+
+<div className="craft-main-area">
+  <div className="craft-skills-area">
+    <span className="craft-section-label">
+      INVENTARIO DE HABILIDADES
+    </span>
+
+    <div className="craft-inventory">
+      {craftSkills.map(skill => {
+        const SkillIcon = skill.icon;
+        const isRequired =
+          selectedCraftSkills.includes(skill.id);
+
+        return (
+          <div
+            key={skill.id}
+            className={`craft-skill-card ${
+              isRequired ? "is-selected" : ""
+            } ${isCrafting && isRequired ? "is-crafting" : ""}`}
+          >
+            <SkillIcon
+              size={38}
+              strokeWidth={1.6}
+              aria-hidden="true"
+            />
+
+            <span>{skill.label}</span>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+
+  <div className="craft-result">
+    <span className="craft-section-label">
+      RESULTADO
+    </span>
+
+    {currentCraftProfile ? (
+  (() => {
+    const ResultIcon = currentCraftProfile.icon;
+
+    const isDiscovered =
+      discoveredCraftProfiles.includes(
+        currentCraftProfile.id
+      );
+
+    if (!isDiscovered) {
+      return (
+        <div className="craft-result-empty">
+          <span>
+            {isCrafting
+              ? "COMBINANDO HABILIDADES"
+              : "PERFIL BLOQUEADO"}
+          </span>
+
+          <h2>
+            {isCrafting
+              ? "PROCESANDO..."
+              : "RESULTADO DESCONOCIDO"}
+          </h2>
+
+          <p>
+            {isCrafting
+              ? "Analizando habilidades y construyendo el perfil profesional."
+              : "Presioná combinar para desbloquear y conocer el resultado."}
+          </p>
+        </div>
+      );
+    }
+
+    return (
+      <div className="craft-result-content">
+        <ResultIcon
+          size={58}
+          strokeWidth={1.6}
+          aria-hidden="true"
+        />
+
+        <span>PERFIL DESBLOQUEADO</span>
+
+        <h2>{currentCraftProfile.title}</h2>
+
+        <p>{currentCraftProfile.description}</p>
+      </div>
+    );
+  })()
+) : (
+  <div className="craft-result-empty">
+    <span>SELECCIONÁ UN PERFIL</span>
+
+    <p>
+      Elegí uno de los iconos superiores para conocer
+      las habilidades necesarias.
+    </p>
+  </div>
+)}
+  </div>
+</div>
+
+      <footer className="craft-footer">
+        <span>
+          PERFILES DESCUBIERTOS{" "}
+          <b>
+            {String(
+              discoveredCraftProfiles.length
+            ).padStart(2, "0")}{" "}
+            / 07
+          </b>
+        </span>
+
+        <button
+          type="button"
+          className="craft-combine-button"
+          disabled={selectedCraftSkills.length !== 2}
+          onClick={combineCraftSkills}
+        >
+          COMBINAR
+        </button>
+
+        
+      </footer>
     </div>
   </section>
 )}
