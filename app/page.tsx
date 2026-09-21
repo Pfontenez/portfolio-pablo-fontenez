@@ -1041,7 +1041,11 @@ function openProject(index: number) {
 
       {screen === "about" && <section className="scene about-scene">
         <img className="scene-bg about-bg" src="/backgrounds/pergola.webp" alt="Pérgola abandonada recuperada por la naturaleza" />
-       
+       <img
+          className="scene-character character-about"
+          src="/characters/pablo-action.png"
+          alt="Pablo como explorador en pose de acción"
+        />
         <div className="right-shade" />
         <Back onClick={() => go("menu")} />
         <div className="about-copy"><span className="screen-label">PERFIL / PLAYER 01</span><h1>QUIÉN SOY</h1><p>Soy Pablo Fonteñez, diseñador gráfico con más de 15 años de experiencia. Trabajé en identidad visual, comunicación institucional y diseño de piezas para distintos medios, buscando siempre que cada proyecto sea claro, atractivo y funcional.</p><p>Durante el último año amplié mi trabajo hacia la comunicación digital y audiovisual: contenido para redes, campañas, presentaciones, páginas web, reels y videos institucionales. Me gusta involucrarme en todo el proceso, desde la idea y la organización del contenido hasta el diseño, la edición y su adaptación a cada formato.</p><p>Hoy mi perfil combina diseño gráfico, contenido digital, edición audiovisual, desarrollo web e inteligencia artificial para conectar la idea, la imagen, el movimiento y la experiencia final.</p><button className="about-skills-link" onClick={() => go("skills")}>INVENTARIO DE HABILIDADES <span>→</span></button></div>
