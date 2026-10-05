@@ -29,6 +29,13 @@ export default function RootLayout({
     <html lang="es">
       <body className={`${blinker.variable} antialiased`}>
         {children}
+        <script
+  type="module"
+  src="https://static.cloudflareinsights.com/beacon.min.js"
+  data-cf-beacon={JSON.stringify({
+    token: "6eb972761a994e529d142660a9337c17",
+  })}
+></script>
       </body>
     </html>
   );
