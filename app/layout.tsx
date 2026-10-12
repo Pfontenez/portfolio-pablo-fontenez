@@ -10,14 +10,15 @@ const blinker = Blinker({
 
 export const metadata: Metadata = {
   title: "Pablo Fonteñez — Diseñador gráfico",
-  description: "Portfolio inmersivo de Pablo Fonteñez: branding, redes sociales, banners, video e inteligencia artificial.",
+  description:
+    "Portfolio inmersivo de Pablo Fonteñez: branding, redes sociales, banners, video e inteligencia artificial.",
   other: {
     "codex-preview": "development",
   },
   icons: {
-  icon: "/icon.png",
-  shortcut: "/icon.png",
-},
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
@@ -27,15 +28,26 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
+      <head>
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-BSMMWE1THM"
+        />
+
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-BSMMWE1THM');
+            `,
+          }}
+        />
+      </head>
+
       <body className={`${blinker.variable} antialiased`}>
         {children}
-        <script
-  type="module"
-  src="https://static.cloudflareinsights.com/beacon.min.js"
-  data-cf-beacon={JSON.stringify({
-    token: "6eb972761a994e529d142660a9337c17",
-  })}
-></script>
       </body>
     </html>
   );
